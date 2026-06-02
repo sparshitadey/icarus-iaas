@@ -27,10 +27,35 @@ This is the short operational guide for the server-side pieces of IaaS.
 A new user will probably need:
 
 - Fermilab services account and password.
-- ICARUS GPVM access.
-- Access to the relevant `/exp/icarus/...` workspace areas.
-- EAF / MinIO access through the ServiceNow request above.
-- Access to view the Landscape Triton logs.
+- ICARUS GPVM access and ICARUS workspace permissions.
+- Access to the relevant `/exp/icarus/...` and `/pnfs/icarus/...` areas.
+- EAF access for remote Triton inference.
+- MinIO access through the ServiceNow request above if they need to inspect, upload, or modify the model repository.
+- Access to view the Landscape Triton logs and FIFE batch dashboards.
+
+## Getting MinIO / EAF Access
+
+MinIO access is needed when the user needs to inspect the model repository, confirm whether a model exists, upload a new model, or modify `config.pbtxt`. Start with the EAF IaaS documentation, then request access through ServiceNow:
+
+- EAF IaaS documentation: <https://eafdocs.fnal.gov/master/01_inference.html>
+- MinIO login: <https://minio-eaf.fnal.gov/login>
+- MinIO / EAF access request: <https://fermi.servicenowservices.com/wp?id=evg-service-item&sys_id=2b7101261b58a950d03aec21f54bcb31>
+
+Once access is granted, check:
+
+- whether the relevant `triton-models/<MODEL_NAME>/` path exists;
+- whether `config.pbtxt` is present;
+- whether the input/output tensor names match the FHiCL/client configuration;
+- whether the model environment has the Python packages needed by `model.py`;
+- whether server-side Triton logs show import, environment, or model-load errors.
+
+> ⚠️ **Do not stop at the client error.** In the NuGraph benchmark, an apparent `Unknown Model` problem was actually a server-side Python environment/import issue. The useful information came from the Landscape Triton logs.
+
+> 📝 **Who to ask:** if the model/config is missing or needs to be updated, ask the relevant model owner and/or the EAF/Triton contact. For the NuGraph benchmark, Giuseppe handled the model/config upload and environment-side fixes. For Triton/EAF server-side information, Burt Holzman can help.
+
+## FNAL Computing Slack
+
+New users should join the FNAL Computing Slack if they will be debugging EAF/Triton, grid jobs, or model deployment issues. Ask Giuseppe to add them if needed. The Slack is often the fastest way to identify whether an issue is local configuration, a known service-side problem, or a permissions/access problem.
 
 ## Model Location
 
@@ -46,7 +71,7 @@ For the NuGraph worked example:
 triton-models/nugraph2_icarus_mpvmprbnb/
 ```
 
-If the model exists but is not visible or not loading, check MinIO and the server-side logs. If the model has not been uploaded yet, ask the model owner or the EAF contact to upload it. For the NuGraph workflow, Giuseppe handled the model/config side.
+If the model exists but is not visible or not loading, check MinIO and the server-side logs. If the model has not been uploaded yet, ask the model owner or the EAF contact to upload it. For the NuGraph workflow, Giuseppe handled the model/config side; for Triton/EAF server-side behaviour and service-side diagnostics, Burt Holzman is a useful contact.
 
 ## What Files Matter on the Server Side?
 

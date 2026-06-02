@@ -4,6 +4,8 @@
 
 ---
 
+> 🔗 **Useful references:** [SBN project.py guide](https://sbnsoftware.github.io/sbndcode_wiki/Using_projectpy_for_grid_jobs.html), [FIFE batch dashboard](https://fifemon.fnal.gov/monitor/d/000000116/user-batch-details?orgId=1&var-cluster=fifebatch&from=now-15m&to=now), and [held-job dashboard](https://fifemon.fnal.gov/monitor/d/000000146/why-are-my-jobs-held?orgId=1).
+
 Once a single job works against EAF, you scale out on the grid with
 **LArBatch / `project.py`**, driven by an XML stage definition. `project.py` manages
 the jobs so you don't track them by hand.

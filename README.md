@@ -19,6 +19,7 @@ This repository is a live technical handoff, not a frozen production manual. The
 ## Contents
 
 - [Overview](#overview)
+- [Required Access Before You Start](#required-access-before-you-start)
 - [Workflow Snapshot](#workflow-snapshot)
 - [Status At A Glance](#status-at-a-glance)
 - [Repository Map](#repository-map)
@@ -76,6 +77,7 @@ icarus-iaas/
 ├── FILES_TO_ADD.md            <- status of real artefacts and deferred pieces
 ├── assets/                    <- small documentation figures extracted from slides
 ├── docs/                      <- ordered technical guides
+│   ├── 00_before_you_start.md
 │   ├── 00_concepts.md
 │   ├── 01_environment_setup.md
 │   ├── 02_pipeline_overview.md
@@ -104,6 +106,7 @@ icarus-iaas/
 
 | Document | Purpose |
 |---|---|
+| [`docs/00_before_you_start.md`](docs/00_before_you_start.md) | Account, permission, MinIO, EAF, Slack, and dashboard checklist before running anything |
 | [`docs/00_concepts.md`](docs/00_concepts.md) | IaaS, Triton, gRPC, and why inference belongs in the production infrastructure |
 | [`docs/01_environment_setup.md`](docs/01_environment_setup.md) | ICARUS account, GPVM/build-node, MRB, token, and disk-area setup |
 | [`docs/02_pipeline_overview.md`](docs/02_pipeline_overview.md) | Stage0 -> Stage1 -> NuGraph -> CAF workflow and where ML plugs in |
@@ -119,20 +122,33 @@ icarus-iaas/
 
 ---
 
-## Quick Start
+## Required Access Before You Start
+
+The full pre-flight checklist is in [`docs/00_before_you_start.md`](docs/00_before_you_start.md). The compact version is below.
 
 ### 1. Check Access
 
-Before starting from scratch, make sure you have:
+Before starting from scratch, make sure the access pieces are in place. A surprisingly large fraction of "software" failures in this workflow are really permission, token, or service-access failures.
 
-- ✅ Fermilab services account and password.
-- ✅ ICARUS GPVM access.
-- ✅ Access to `/exp/icarus/app/users/<USER>` and the relevant PNFS areas.
-- ✅ ICARUS bearer-token access: `htgettoken -a htvaultprod.fnal.gov -i icarus`.
-- ✅ EAF / MinIO access for remote Triton work.
-- ✅ Access to the Landscape Triton logs and FIFE batch dashboards.
+| Access | Why It Matters | Where To Start |
+|---|---|---|
+| Fermilab services account | SSH, ServiceNow, tokens, dashboards | Fermilab account onboarding / Service Desk |
+| ICARUS permissions | ICARUS GPVMs, `/exp/icarus/...`, `/pnfs/icarus/...`, software areas | Ask the ICARUS computing/software contacts for workspace and GPVM access |
+| ICARUS GPVM access | Interactive setup, light tests, file inspection | `ssh -KXY <USER>@icarusgpvmNN.fnal.gov` |
+| Build-node access | Larger local builds without overloading GPVMs | Use `icarusbuild02` for heavier `mrb` builds where possible |
+| Bearer token / HTVault | Grid submission and protected data access | `htgettoken -a htvaultprod.fnal.gov -i icarus` |
+| LArBatch / `project.py` | Grid submission through XML workflows | [SBN project.py guide](https://sbnsoftware.github.io/sbndcode_wiki/Using_projectpy_for_grid_jobs.html) |
+| EAF access | Remote Triton inference on GPU infrastructure | [EAF IaaS documentation](https://eafdocs.fnal.gov/master/01_inference.html) |
+| MinIO access | Inspecting/uploading Triton model repositories and configs | [MinIO login](https://minio-eaf.fnal.gov/login), request via [ServiceNow](https://fermi.servicenowservices.com/wp?id=evg-service-item&sys_id=2b7101261b58a950d03aec21f54bcb31) |
+| Triton/FIFE dashboards | Monitoring jobs, queueing, requests, and server-side failures | [Triton logs](https://landscape.fnal.gov/monitor/d/mRzFgCySz/triton-logs?orgId=1), [Landscape dashboard](https://landscape.fnal.gov/monitor/goto/H9EJX6dDk?orgId=1), [FIFE batch dashboard](https://fifemon.fnal.gov/monitor/d/000000116/user-batch-details?orgId=1&var-cluster=fifebatch&from=now-15m&to=now) |
+
+> ⚠️ **Access first, debugging second:** if a new user cannot see MinIO, cannot view the Triton logs, cannot write to the right ICARUS area, or cannot obtain a token, fix that before chasing FHiCL or C++ errors.
+
+> 🧭 **People and channels:** for the general ICARUS IaaS workflow, useful contacts include Sparshita, Giuseppe, and Meghna. For Triton/EAF server-side information, Burt Holzman can help. New users should also join the FNAL Computing Slack; ask Giuseppe to add them if needed.
 
 For large rebuilds, use `icarusbuild02` rather than a GPVM where possible. The build node has more resources, so `mrb i -j20` is reasonable there; on a GPVM, use something smaller such as `mrb i -j4`.
+
+## Quick Start
 
 ### 2. Follow the Path
 

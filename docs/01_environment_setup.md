@@ -1,11 +1,59 @@
 # 01 -- Environment Setup
 
+> 🔐 **Before running setup commands:** complete the account and permission checklist in [`docs/00_before_you_start.md`](00_before_you_start.md). This includes Fermilab services, ICARUS permissions, EAF/MinIO access, dashboard access, and FNAL Computing Slack.
+
+---
+
+
 > The reproducible starting point: accounts, disks, tokens, MRB setup, and the ICARUS development area used by the NuGraph benchmark.
 
 ---
 
 Everything here is **infrastructure** -- identical for NuGraph, CVN, or any model.
 Do it once and you have a working dev area.
+
+## 🔐 Required Access Before You Start
+
+Before trying to reproduce the workflow, confirm the access chain from Fermilab login through EAF/MinIO. The commands later in this document assume these pieces are already in place.
+
+| Access | Needed For | Where To Go / Who To Ask |
+|---|---|---|
+| Fermilab services account | SSH, ServiceNow, tokens, dashboards | Fermilab account onboarding / Service Desk |
+| ICARUS experiment permissions | ICARUS GPVMs, `/exp/icarus/...`, `/pnfs/icarus/...`, and ICARUS software areas | Ask the ICARUS computing/software contacts to confirm workspace, GPVM, and group permissions |
+| ICARUS GPVM access | Interactive setup, light tests, log inspection | Test with `ssh -KXY <USER>@icarusgpvmNN.fnal.gov` |
+| Build-node access | Building local ICARUS/LArSoft areas | Use `icarusbuild02` for larger builds; avoid heavy builds on GPVMs where possible |
+| Bearer token / HTVault | Grid jobs and protected data access | `htgettoken -a htvaultprod.fnal.gov -i icarus` |
+| LArBatch / `project.py` | Submitting grid jobs from XML | [SBN project.py guide](https://sbnsoftware.github.io/sbndcode_wiki/Using_projectpy_for_grid_jobs.html) |
+| EAF access | Remote Triton inference on GPU infrastructure | [EAF IaaS documentation](https://eafdocs.fnal.gov/master/01_inference.html) |
+| MinIO access | Viewing or modifying Triton model repositories/configs | [MinIO login](https://minio-eaf.fnal.gov/login); request access via [ServiceNow](https://fermi.servicenowservices.com/wp?id=evg-service-item&sys_id=2b7101261b58a950d03aec21f54bcb31) |
+| Triton logs / Landscape | Server-side model-load and request diagnostics | [Triton logs](https://landscape.fnal.gov/monitor/d/mRzFgCySz/triton-logs?orgId=1), [Landscape dashboard](https://landscape.fnal.gov/monitor/goto/H9EJX6dDk?orgId=1) |
+| FIFE batch dashboard | Grid job progress and held/failure states | [FIFE batch dashboard](https://fifemon.fnal.gov/monitor/d/000000116/user-batch-details?orgId=1&var-cluster=fifebatch&from=now-15m&to=now) |
+
+Checklist for a new user:
+
+- [ ] Fermilab services account is active.
+- [ ] User can log into an ICARUS GPVM.
+- [ ] User has ICARUS group/workspace permissions.
+- [ ] User can work under `/exp/icarus/app/users/<USER>`.
+- [ ] User can read/write the appropriate `/pnfs/icarus/...` locations.
+- [ ] User can obtain an ICARUS bearer token.
+- [ ] User has EAF access if testing remote Triton inference.
+- [ ] User has requested MinIO access if they need to inspect, upload, or modify a model/config.
+- [ ] User can view the Landscape Triton logs and FIFE dashboards.
+
+> 📝 **Model/config ownership:** if the model should already exist in MinIO but is missing, stale, or failing to load, check with the model owner or the EAF/Triton contact. For the NuGraph benchmark, Giuseppe handled the model/config upload and environment-side updates.
+
+## 🧭 Contacts and Communication
+
+| Topic | Useful Contact / Channel | Notes |
+|---|---|---|
+| General ICARUS IaaS workflow | Sparshita, Giuseppe, Meghna | Good starting points for the NuGraph benchmark path, the grid/EAF workflow, and adaptation to other inference-heavy reconstruction tasks. |
+| NuGraph benchmark model/config | Giuseppe | Ask if the NuGraph model/config is missing, stale, or needs to be updated in MinIO. |
+| Triton/EAF server-side information | Burt Holzman | Useful for server-side Triton behaviour, service configuration, model-load failures, and EAF-side diagnostics. |
+| FNAL Computing Slack | Ask Giuseppe to add the new user if needed | Useful for quick computing questions, EAF/Triton context, and finding the right service-side contact. |
+| ICARUS workspace/GPVM permissions | ICARUS computing/software contacts | Needed for ICARUS GPVM access and the `/exp/icarus/...` and `/pnfs/icarus/...` areas. |
+
+> ⚠️ **Ask early:** if a new user cannot access MinIO, Landscape/Triton logs, FIFE dashboards, or ICARUS workspaces, it is usually faster to resolve the permission path first than to debug around it.
 
 ## Logging In
 
