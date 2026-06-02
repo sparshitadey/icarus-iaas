@@ -1,8 +1,12 @@
-# 10 - Job submission cheat sheet
+# 10 -- Job Submission Cheatsheet
+
+> A compact copy-paste reference for `project.py`, `jobsub`, held jobs, log extraction, and dashboard checks.
+
+---
 
 This is the short copy-paste version of `docs/05_grid_submission.md`. Use the longer guide when something fails.
 
-## Start an SL7 session and set up ICARUS
+## Start an SL7 Session and Set Up ICARUS
 
 ```bash
 sh /exp/$(id -ng)/data/users/vito/podman/start_SL7dev_jsl.sh
@@ -29,7 +33,7 @@ setup larbatch v01_61_00
 
 The LArBatch version matters because this version of `project.py` handles the bearer-token workflow.
 
-## Submit, check, retry
+## Submit, Check, Retry
 
 ```bash
 cd /exp/icarus/app/users/<USER>/<DEV_AREA>/GridWork
@@ -40,7 +44,7 @@ project.py --xml testsubmit.xml --stage ng2test --makeup
 project.py --xml testsubmit.xml --stage ng2test --clean
 ```
 
-## Job status
+## Job Status
 
 ```bash
 jobsub_q --user <USER> -G icarus
@@ -61,7 +65,7 @@ Be careful with this one; it removes all jobs owned by the user:
 jobsub_rm --constraint '(Owner=?="<USER>")'
 ```
 
-## After a job finishes
+## After a Job Finishes
 
 In the job output directory:
 
@@ -78,15 +82,14 @@ cd log_unpack
 grep -Rni "error\|exception\|failed\|triton\|cannot\|file\|art::Exception" .
 ```
 
-## Dashboard links
+## Dashboard Links
 
 - User batch dashboard: <https://fifemon.fnal.gov/monitor/d/000000116/user-batch-details?orgId=1&var-cluster=fifebatch&var-user=<USER>&from=now-15m&to=now>
 - Held jobs: <https://fifemon.fnal.gov/monitor/d/000000146/why-are-my-jobs-held?orgId=1&var-user=<USER>>
 
-## Scaling notes
+## Scaling Notes
 
 - ICARUS currently limits submissions to about 10k jobs at a time.
 - More files per job usually means longer jobs, not more parallel inference requests.
 - For true concurrency pressure, move towards multi-slice or multi-batch processing.
 - Save dashboard snapshots or exported data after each stress test so timing, queueing, and failure behaviour can be compared later.
-

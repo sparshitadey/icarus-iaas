@@ -1,8 +1,12 @@
-# 09 - Grep cheat sheet for diagnostics
+# 09 -- Grep Cheatsheet
+
+> Fast patterns for finding failure modes in grid logs, FHiCL dumps, Triton output, and generated configuration.
+
+---
 
 This is a quick reference for searching grid logs, resolved fcls, and Triton client/server output. It is deliberately practical: copy the command, then narrow the pattern.
 
-## Basic recursive searches
+## Basic Recursive Searches
 
 ```bash
 # case-insensitive recursive search, with line numbers
@@ -15,7 +19,7 @@ grep -Rni --include="*.log" --include="*.out" --include="*.err" "pattern" .
 grep -Rni "error\|exception\|failed\|cannot\|segmentation\|art::Exception" .
 ```
 
-## Grid log triage
+## Grid Log Triage
 
 Run this after unpacking `log.tar` into a directory such as `log_unpack/`:
 
@@ -35,7 +39,7 @@ less larStage0.out
 less Stage0.fcl
 ```
 
-## Triton-specific searches
+## Triton-specific Searches
 
 ```bash
 # client-side signs that requests reached Triton
@@ -48,7 +52,7 @@ grep -Rni "failed to load\|unknown model\|no available versions\|ModuleNotFoundE
 grep -Rni "nv_inference_request_success\|nv_inference_request_failure" .
 ```
 
-## FHiCL / environment path checks
+## FHiCL / Environment Path Checks
 
 ```bash
 # Is my local MRB build visible?
@@ -59,7 +63,7 @@ echo "$CET_PLUGIN_PATH" | tr ':' '\n' | head -n 20
 grep -Rni "#include\|NuGraph\|TritonConfig\|serverURL" "$MRB_SOURCE/icaruscode/icaruscode/TPC/NuGraph"
 ```
 
-## Pattern tips
+## Pattern Tips
 
 - `-R` means recursive.
 - `-n` prints line numbers.
@@ -70,4 +74,3 @@ grep -Rni "#include\|NuGraph\|TritonConfig\|serverURL" "$MRB_SOURCE/icaruscode/i
 ```bash
 grep -Rni -A 5 -B 5 "DictionaryNotFound" .
 ```
-

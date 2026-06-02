@@ -1,4 +1,8 @@
-# 07 -- Troubleshooting (error-code catalogue)
+# 07 -- Troubleshooting
+
+> The error catalogue. Start here when something fails; most of the expensive lessons are collected in one place.
+
+---
 
 Indexed by what you'll actually see. Every entry here was hit and solved during the
 NuGraph work; the same failures can recur for CVN or any other target model because they're mostly
@@ -6,7 +10,7 @@ environment/wiring issues, not model issues.
 
 ---
 
-## Quick environment sanity checks (run these before debugging anything)
+## Quick Environment Sanity Checks (Run These Before Debugging Anything)
 
 ```bash
 echo "MRB_TOP=$MRB_TOP"                 # must be YOUR dev area, not empty
@@ -21,9 +25,9 @@ If `MRB_TOP` is empty, your local build is **not** active and you are running gl
 
 ---
 
-## Exit / error codes
+## Exit / Error Codes
 
-### Error 90 -- "file not found"
+### Error 90 -- "File Not Found"
 **Most common cause: the MRB runtime isn't active in this shell**, so `FHICL_FILE_PATH`
 only contains CVMFS paths and `lar` can't see your local fcls (or their `#include`s).
 
@@ -84,7 +88,7 @@ model the missing classes may be different** -- read the error, it tells you whi
 
 ---
 
-### Error 65 -- "Unknown Model" / "Request for unknown model ... has no available versions"
+### Error 65 -- "Unknown Model" / "Request for Unknown Model ... Has No Available Versions"
 The model *is* in the bucket but **failed to load on the server** -- so it's a
 **server-side environment** problem, not your client/URL.
 
@@ -99,7 +103,7 @@ model's `model.py` imports isn't present (or is broken) in the deployed env."
 
 ---
 
-### Error 1 -- `AttributeError` inside the model
+### Error 1 -- `AttributeError` Inside the Model
 The request reaches the model and enters `forward()`, then fails on a missing
 attribute, e.g. `module 'nugraph.util' has no attribute 'FeatureExtension'`.
 
@@ -113,18 +117,18 @@ ensure the deployed env has the exact package versions the checkpoint expects.
 
 ---
 
-### Error 137 -- out-of-memory (grid)
+### Error 137 -- Out-of-memory (Grid)
 The job exceeded the memory it requested. Increase the memory quota in the grid XML
 and resubmit. See `docs/05`.
 
-### "Held" grid jobs
+### "Held" Grid Jobs
 Usually the requested resources exceed what the grid will give (e.g. "disk usage
 greater than requested"). Simplest fix: remove the held jobs and resubmit with
 adjusted resources (`--check` then `--makeup`). Commands in `docs/05`.
 
 ---
 
-## Infrastructure-level flakiness (not your fault)
+## Infrastructure-level Flakiness (Not Your Fault)
 
 - **EAF maintenance / downtime**: EAF goes down for scheduled maintenance; jobs will
   fail wholesale during these windows. Confirm EAF is up before debugging your code.
@@ -134,7 +138,7 @@ adjusted resources (`--check` then `--makeup`). Commands in `docs/05`.
 - **GPVM overload**: if a local run hangs, the GPVM may be saturated. Check with
   `who <user>@<gpvm>.fnal.gov` and consider switching GPVMs.
 
-## Validating a run actually worked
+## Validating a Run Actually Worked
 
 ```bash
 # server is alive and model is ready:

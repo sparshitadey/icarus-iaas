@@ -1,4 +1,8 @@
-# 05 -- Grid submission (FermiGrid)
+# 05 -- Grid Submission
+
+> How to carry the Triton/EAF workflow into LArBatch/project.py, monitor running jobs, and recover timing, memory, and failure information.
+
+---
 
 Once a single job works against EAF, you scale out on the grid with
 **LArBatch / `project.py`**, driven by an XML stage definition. `project.py` manages
@@ -9,7 +13,7 @@ Useful links:
 - Job dashboard: <https://fifemon.fnal.gov/monitor/d/000000116/user-batch-details?orgId=1&var-cluster=fifebatch&var-user=<you>>
 - "Why are my jobs held": <https://fifemon.fnal.gov/monitor/d/000000146/why-are-my-jobs-held?orgId=1&var-user=<you>>
 
-## Setup before submitting
+## Setup Before Submitting
 
 ```bash
 sh /exp/$(id -ng)/data/users/vito/podman/start_SL7dev_jsl.sh
@@ -27,7 +31,7 @@ setup larbatch v01_61_00
 > If you skip the LArBatch version bump, `project.py` errors out because the older
 > version can't handle the bearer token.
 
-## Submit / check / clean
+## Submit / Check / Clean
 
 ```bash
 cd /exp/icarus/app/users/<you>/<dev>/GridWork
@@ -37,7 +41,7 @@ project.py --xml /path/to/<file>.xml --stage <stage> --makeup   # retry failed j
 project.py --xml /path/to/<file>.xml --stage <stage> --clean    # remove unwanted job files
 ```
 
-## Job status / removing / releasing
+## Job Status / Removing / Releasing
 
 ```bash
 jobsub_q --user <you> -G icarus                                 # status
@@ -48,19 +52,19 @@ jobsub_rm      --constraint '(JobStatus=?=5) && (Owner=?="<you>")'   # remove he
 # jobsub_rm    --constraint '(Owner=?="<you>")'                 # remove ALL -- BE CAREFUL
 ```
 
-## Held jobs
+## Held Jobs
 
 Jobs are usually held when requested resources exceed what the grid grants (e.g.
 "disk usage greater than requested", or memory -> Error 137). Simplest path: remove
 the held jobs, then `--check` and `--makeup` with adjusted resources in the XML.
 
-## What to expect while running
+## What to Expect While Running
 
 There's a lag between *submitted* -> *running* -> *completed*; jobs sit **idle** in
 queue for a while -- don't panic. If they hang too long, lower the requested memory
 or the number of jobs.
 
-## Reading job statistics & logs
+## Reading Job Statistics & Logs
 
 After a job finishes, in its output dir:
 ```bash
@@ -76,7 +80,7 @@ grep -Rni "error\|exception\|failed\|triton\|cannot\|file\|art::Exception"
 Common: **Error 90** (file not found -- e.g. you listed two fcls in the XML when one
 was needed), **Error 137** (memory -- raise the quota in the XML).
 
-## Example XML files (reference)
+## Example XML Files (Reference)
 
 - Giuseppe (NG2): `/exp/icarus/app/users/cerati/icaruscode-v10/srcs/testnuml-new.xml`
 - Sparshita's NuGraph Triton-via-EAF working XML reference:
@@ -92,7 +96,7 @@ The **real, working** XML (with your paths placeholdered as the `&user;` entity)
 `grid/testsubmit.xml`, and `grid/README.md` walks the full submit/check/extract
 workflow field by field.
 
-## Practical scale notes (from NuGraph runs)
+## Practical Scale Notes (from NuGraph Runs)
 
 - ICARUS caps submissions at **10k jobs** at a time.
 - Duplicating an events list to fake scale:

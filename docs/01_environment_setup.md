@@ -1,16 +1,20 @@
-# 01 -- Environment setup
+# 01 -- Environment Setup
+
+> The reproducible starting point: accounts, disks, tokens, MRB setup, and the ICARUS development area used by the NuGraph benchmark.
+
+---
 
 Everything here is **infrastructure** -- identical for NuGraph, CVN, or any model.
 Do it once and you have a working dev area.
 
-## Logging in
+## Logging In
 
 ```bash
 kinit -f <you>@FNAL.GOV
 ssh -KXY <you>@icarusgpvm01.fnal.gov          # any icarusgpvmNN; VS Code remote works well
 ```
 
-## Where to put things (disk layout)
+## Where to Put Things (Disk Layout)
 
 | Path | Use |
 |------|-----|
@@ -21,7 +25,7 @@ ssh -KXY <you>@icarusgpvm01.fnal.gov          # any icarusgpvmNN; VS Code remote
 | `/pnfs/icarus/persistent/users/<you>` | shared sim files; avoid unless needed |
 | `/pnfs/icarus/resilient/users/<you>` | longer retention than scratch |
 
-## Base setup (every session)
+## Base Setup (Every Session)
 
 ```bash
 sh /exp/$(id -ng)/data/users/vito/podman/start_SL7dev_jsl.sh    # enter SL7 container image
@@ -29,7 +33,7 @@ source /cvmfs/icarus.opensciencegrid.org/products/icarus/setup_icarus.sh
 setup icaruscode v10_06_00_01p01 -q e26:prof                    # version used for the NuGraph work
 ```
 
-## Tokens (needed to run examples / CAFAna / grid)
+## Tokens (Needed to Run Examples / CAFAna / Grid)
 
 ```bash
 # get a token for the session (valid a few hours):
@@ -45,7 +49,7 @@ htgettoken -a htvaultprod.fnal.gov -i icarus
 > a few hours, so you don't need to remake it, and the clean shell usually fixes the
 > sourcing errors.
 
-## Creating a dev area (MRB) and pulling a feature branch
+## Creating a Dev Area (MRB) and Pulling a Feature Branch
 
 This is how the NuGraph dev area was built (the rtriozzi/cerati NuGraph2 filter branch):
 
@@ -73,7 +77,7 @@ mrbslp
 > the branch that has the target model integrated in the ICARUS chain (ask the ML reco group), and
 > use a matching tag/qualifier. CVN is one example; the MRB mechanics are identical.
 
-## Re-entering an existing dev area (subsequent sessions)
+## Re-entering an Existing Dev Area (Subsequent Sessions)
 
 ```bash
 sh /exp/$(id -ng)/data/users/vito/podman/start_SL7dev_jsl.sh
@@ -93,7 +97,7 @@ type mrbslp                                              # -> should report it's
 ```
 (`type mrbslp` saying "function" is necessary but not sufficient -- also check `$MRB_TOP`.)
 
-## File access: prefer XRootD over raw PNFS
+## File Access: Prefer XRootD Over Raw PNFS
 
 dCache serves data via XRootD; direct POSIX access bypasses load balancing,
 redirection, and fault tolerance, and scales worse for production jobs. Convert a

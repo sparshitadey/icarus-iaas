@@ -1,6 +1,12 @@
-# 02 -- Pipeline overview (where ML plugs in)
+# 02 -- Pipeline Overview
 
-## The standard production chain
+> Where ML inference enters the ICARUS reconstruction chain, and why NuGraph2 is a useful benchmark for the general IaaS pattern.
+
+---
+
+![NuGraph2 Reconstruction Chain](../assets/nugraph_reconstruction_chain.png)
+
+## The Standard Production Chain
 
 ```
  MC sim / Data ─▶ Stage0 ─▶ Stage1 ─▶ CAF Maker ─▶ SBN ML CAF Maker ─▶ analysis
@@ -20,7 +26,7 @@
   Pandora, SPINE, BDTs for vertex / track-shower). Each is a candidate for IaaS;
   each is a place inference becomes the bottleneck.
 
-## What NuGraph2 is (so you can find CVN's analogue)
+## What NuGraph2 Is (So You Can Find CVN's Analogue)
 
 NuGraph2 is a Graph Neural Network for low-level reconstruction of neutrino
 interactions in a LArTPC. It enhances Pandora and outputs:
@@ -32,7 +38,7 @@ Its outputs are stored as art associations between `recob::Hit` and
 (`dictionaries/`, Error 7) was needed. **Another model may write different products**,
 so expect a different (but analogous) set of dictionary entries.
 
-## Reference run: standard Stage0 -> Stage1 (no Triton, no ML)
+## Reference Run: Standard Stage0 -> Stage1 (No Triton, No ML)
 
 Always confirm the plain chain runs before adding inference. Run a few events:
 
@@ -48,7 +54,7 @@ lar -c cafmakerjob_icarus_data.fcl -n -5 -s stage1-test.root
 > Use a small `-n` (e.g. 5) while wiring things up -- you're testing that the pipeline
 > works, not collecting statistics. Larger jobs can get killed on a busy GPVM.
 
-## Reference run: NuGraph in the chain (libtorch, local)
+## Reference Run: NuGraph in the Chain (Libtorch, Local)
 
 Once the dictionary work is done (see `dictionaries/`), the local NuGraph inference
 runs with something like:
@@ -60,7 +66,7 @@ lar -c testinference_slice_icarus.fcl -n 5 \
 Exit code 0 = the model->Stage1 path works locally. From here you swap the local
 inference for Triton (`docs/03`).
 
-## Inspecting output
+## Inspecting Output
 
 ```bash
 root -l stage1-nugraph.root

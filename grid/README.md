@@ -1,4 +1,8 @@
-# grid -- FermiGrid submission & log extraction
+# Grid Submission Reference
+
+> The `project.py` XML and log tools used to run the benchmark through FermiGrid, with writable paths placeholdered for safety.
+
+---
 
 Real, working grid workflow for running NuGraph inference (via EAF) on the grid with
 LArBatch / `project.py`. The same pattern applies to other ML inference stages -- only the fcl and the
@@ -16,7 +20,7 @@ Files here:
 
 ---
 
-## Submitting jobs (the full workflow)
+## Submitting Jobs (the Full Workflow)
 
 Author of this recipe: S. Dey. General reference:
 <https://sbnsoftware.github.io/sbndcode_wiki/Using_projectpy_for_grid_jobs.html>
@@ -45,7 +49,7 @@ project.py --xml testsubmit.xml --stage ng2test --submit
 `project.py` also supports `--check` (how many files processed), `--makeup` (retry
 failed jobs), and `--clean` -- same `--xml/--stage` syntax.
 
-### Checking results
+### Checking Results
 
 ```bash
 cat larStage0.out          # in the defined output dir: time + memory summary
@@ -66,7 +70,7 @@ jobsub_rm      --constraint '(JobStatus=?=5) && (Owner=?="<USER>")'  # remove he
 > (`.../tarballs/icaruscode-workingarea-<release>.tar.gz`). Build/refresh that tarball
 > from your dev area whenever your code changes, or the grid runs stale code.
 
-## The XML, field by field
+## The XML, Field by Field
 
 | Field | Meaning | Model-specific notes |
 |-------|---------|---------------|
@@ -85,7 +89,7 @@ ICARUS caps submissions at **10k jobs** at a time.
 
 ---
 
-## Extracting logs from failed jobs (`extractLogs.sh`)
+## Extracting Logs from Failed Jobs (`extractLogs.sh`)
 
 When a batch has failures, this collects the per-job `log.tar` files into a local
 `bad_logs/` directory so you can grep them.

@@ -1,10 +1,14 @@
-# 03 -- (a) Triton server locally on a GPVM (CPU)
+# 03 -- Local Triton on a GPVM
+
+> Stage (a): prove the client/server wiring locally. This is CPU-only, but it is the cleanest place to debug FHiCL and request-path mistakes.
+
+---
 
 Goal of this stage: prove the **client↔server wiring** works end-to-end. The GPVM has
 no GPU, so this runs CPU-only -- that's expected and fine. The point is to validate
 the fcls and the request path before going to EAF.
 
-## Spin up the server
+## Spin Up the Server
 
 In one terminal (your dev area), launch Triton via the setup script:
 
@@ -35,7 +39,7 @@ In the log you want to see:
 On a GPVM you'll also see `nvidia-smi: command not found` and NVML/CUDA warnings --
 **this is normal**, it just means no GPU is visible. CPU-only is expected here.
 
-## Health checks (manual)
+## Health Checks (Manual)
 
 ```bash
 curl -s localhost:8000/v2/health/ready
@@ -43,7 +47,7 @@ curl -s localhost:8000/v2/models/<model_name>          # dumps the model's IO co
 ss -lntp | egrep '8000|8001|8002'                      # ports owned by tritonserver
 ```
 
-## Run the client (the inference fcl) against it
+## Run the Client (the Inference FCL) Against It
 
 In a **second terminal** (set up the same dev environment), run the Triton-flavoured
 fcl. Make sure your fcl dir is on the path (Error 90 in `docs/07` if not):
@@ -56,7 +60,7 @@ lar -c testinference_slice_icarus_triton.fcl -n 5 \
     --process-name redo -o stage1-nugraph_triton.root
 ```
 
-## Confirm inference actually happened
+## Confirm Inference Actually Happened
 
 ```bash
 curl -s localhost:8002/metrics | egrep "nv_inference_request_success|<model_name>"
@@ -65,13 +69,13 @@ You want `nv_inference_request_success{...} = N` and
 `nv_inference_request_failure{...} = 0`. For the NuGraph 5-event reference run this
 was 4 successful requests, 0 failures.
 
-## Kill the server when done
+## Kill the Server When Done
 
 ```bash
 killall -9 /cvmfs/oasis.opensciencegrid.org/mis/apptainer/1.3.2/x86_64/libexec/apptainer/libexec/starter
 ```
 
-## Debugging fcl includes
+## Debugging FCL Includes
 
 ```bash
 lar -c <your>.fcl --debug-config=full.fcl     # dumps the fully-resolved config

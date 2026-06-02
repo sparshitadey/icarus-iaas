@@ -1,6 +1,12 @@
-# 00 -- Concepts & motivation
+# 00 -- Concepts and Motivation
 
-## Why IaaS at all
+> A compact map of the IaaS idea: why inference moves out of the reconstruction process, what Triton provides, and how the request path is monitored.
+
+---
+
+![IaaS Client Server Pattern](../assets/iaas_client_server.png)
+
+## Why IaaS at All
 
 In the traditional setup, a reconstruction job runs its ML model **in-process** on
 the same node, talking directly to a local GPU (or, worse, the CPU). That couples
@@ -24,7 +30,7 @@ reconstruction chain (DNN ROI in signal processing, NuGraph after Pandora, SPINE
 BDTs) and is the **dominant scaling bottleneck** -- full-chain production can take
 O(months). Speeding up inference is the highest-leverage place to work.
 
-## The pieces
+## The Pieces
 
 - **Triton inference server** -- NVIDIA's server that hosts one or more models and
   answers inference requests. Each model lives in a `model_repository` with a
@@ -42,7 +48,7 @@ O(months). Speeding up inference is the highest-leverage place to work.
 - **Apptainer** -- container runtime that runs Triton inside a portable, SL7-compatible
   environment with the right python/CUDA/Triton backend bundled, isolated from the host.
 
-## The request path
+## The Request Path
 
 ```
 reconstruction job (client)
@@ -54,7 +60,7 @@ reconstruction job (client)
    model inference (on GPU, ideally)
 ```
 
-## A useful comparator: DNN ROI for WCT (Wire-Cell Toolkit)
+## A Useful Comparator: DNN ROI for WCT (Wire-Cell Toolkit)
 
 The same idea was applied to **DNN ROI finding** in the signal-processing chain
 (U-ResNet architecture). There, the Triton client (`ITensorForward`) swaps in for

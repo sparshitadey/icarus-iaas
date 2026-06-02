@@ -1,8 +1,12 @@
-# 11 - Triton, EAF, and MinIO cheat sheet
+# 11 -- Triton, EAF, and MinIO Cheatsheet
+
+> The service-side map: model locations, access requests, Triton logs, EAF documentation, and useful dashboards.
+
+---
 
 This is the short operational guide for the server-side pieces of IaaS.
 
-## What is running where?
+## What Is Running Where?
 
 - The art/LArSoft job is the **client**.
 - Triton is the **server**.
@@ -10,7 +14,7 @@ This is the short operational guide for the server-side pieces of IaaS.
 - For local tests, you can run Triton yourself on a GPVM, normally CPU-only.
 - For EAF, the model is deployed through the EAF Triton service and runs on GPU nodes.
 
-## Useful links
+## Useful Links
 
 - EAF IaaS documentation: <https://eafdocs.fnal.gov/master/01_inference.html>
 - MinIO model bucket: <https://minio-eaf.fnal.gov/login>
@@ -18,7 +22,7 @@ This is the short operational guide for the server-side pieces of IaaS.
 - Server-side Triton logs: <https://landscape.fnal.gov/monitor/d/mRzFgCySz/triton-logs?orgId=1>
 - Landscape monitoring dashboard: <https://landscape.fnal.gov/monitor/goto/H9EJX6dDk?orgId=1>
 
-## Access needed
+## Access Needed
 
 A new user will probably need:
 
@@ -28,7 +32,7 @@ A new user will probably need:
 - EAF / MinIO access through the ServiceNow request above.
 - Access to view the Landscape Triton logs.
 
-## Model location
+## Model Location
 
 The model should eventually appear in MinIO under something like:
 
@@ -44,7 +48,7 @@ triton-models/nugraph2_icarus_mpvmprbnb/
 
 If the model exists but is not visible or not loading, check MinIO and the server-side logs. If the model has not been uploaded yet, ask the model owner or the EAF contact to upload it. For the NuGraph workflow, Giuseppe handled the model/config side.
 
-## What files matter on the server side?
+## What Files Matter on the Server Side?
 
 A Triton model repository normally looks like:
 
@@ -58,7 +62,7 @@ A Triton model repository normally looks like:
 
 `config.pbtxt` defines the model name, backend/platform, max batch size, inputs, and outputs. For any target model, this file is one of the main things to diff against the NuGraph worked example. CVN is one concrete example.
 
-## Quick checks
+## Quick Checks
 
 For a local Triton server:
 
@@ -76,7 +80,6 @@ curl -s localhost:8002/metrics | egrep "nv_inference_request_success|nv_inferenc
 
 For EAF, the local health checks may not apply in the same way because the service is remote. Use the client logs, the Landscape Triton logs, and the dashboards.
 
-## Common failure pattern
+## Common Failure Pattern
 
 If the client says `Unknown Model`, do not assume the fcl model name is wrong immediately. In the NuGraph case, this happened when the model existed in MinIO but failed to load on the server because of a Python environment issue. The useful diagnostic came from the server-side logs, not the local client log.
-

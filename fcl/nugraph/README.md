@@ -1,4 +1,8 @@
-# fcl/nugraph -- reference (working) NuGraph fcls
+# NuGraph FHiCL Reference
+
+> The real NuGraph benchmark FHiCL files used to validate the IaaS path. Treat this as the worked implementation to compare against other models.
+
+---
 
 These are the **real, working** NuGraph fcls (author: G. Cerati; Triton/EAF variants:
 S. Dey). They are the benchmark files to compare against when adapting the workflow to another model. The only path that was
@@ -14,7 +18,7 @@ Each `testinference_slice_*` file is the **top-level job**; it `#include`s the m
 | `testinference_slice_icarus_triton.fcl` | `nugraph_icarus_triton.fcl` | Triton on **local GPVM** |
 | `testinference_slice_icarus_triton_eaf.fcl` | `nugraph_icarus_triton_eaf.fcl` | Triton via **EAF** |
 
-## How the three flavours actually differ (this is the whole trick)
+## How the Three Flavours Actually Differ (This Is the Whole Trick)
 
 All three share the same structure: per-cryostat slice-hit producers
 (`nuslhitsCryoE/W`) feed a NuGraph producer (`NuGraphCryoE/W`), with `NuGraphAnalyzer`
@@ -38,7 +42,7 @@ analyzers. The differences are tiny and localised:
 3. **Model normalisation constants** (`avgs_u/v/y`, `devs_u/v/y`) and input labels
    (`LoaderTool.hitInput/spsInput`, `DecoderTools.*.hitInput`) are set per cryostat.
 
-## Single-slice vs multi-slice -- already present, just not wired in
+## Single-slice Vs Multi-slice -- Already Present, Just Not Wired In
 
 The prolog files **already define** the multi-slice chain; it's just commented out of
 the producer paths. To enable it you switch the loader and add the producers to the
@@ -54,7 +58,7 @@ So "multi-slice" is mostly: swap loader tool, point the decoder/loader labels at
 NCC slices, and add `NCCSlices* -> NGMultiSlice* -> ngfilteredhits*` into `reco`.
 (The EAF top-level file has these lines stubbed/commented ready to uncomment.)
 
-## Quick map of the model-specific knobs
+## Quick Map of the Model-specific Knobs
 
 | knob | value (NuGraph) |
 |------|-----------------|

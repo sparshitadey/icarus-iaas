@@ -1,17 +1,16 @@
-# 08 -- Adapting the pipeline to a new ML model
+# 08 -- Porting a New Model
 
-> **Read this first if you want to apply the NuGraph benchmark workflow to another
-> ML inference stage.** You do **not** need to rebuild the infrastructure. The
-> Triton/EAF/grid machinery is model-agnostic. Your work is to swap in a small set
-> of model-specific pieces and then re-run the same validation and stress tests.
->
-> CVN is used below as a concrete example because it is a natural next target, but
-> the checklist is meant to describe a generalisable workflow for ICARUS or other
-> ML-based reconstruction stages.
+> NuGraph2 is the benchmark implementation. CVN is one concrete adaptation example. The method is intended to be model-agnostic.
 
 ---
 
-## The mental model
+NuGraph2 is used here as the worked benchmark because it exercises the complete IaaS chain: FHiCL configuration, Triton model access, EAF deployment, grid submission, diagnostics, and stress testing.
+
+CVN is included as a concrete example of how another ICARUS ML inference component could be adapted to the same infrastructure. The broader goal is to make the pattern portable wherever inference becomes a production bottleneck: keep the submission, monitoring, and diagnostic machinery; swap the model-specific contract.
+
+> ⚠️ **Adaptation Rule:** do not copy NuGraph labels blindly into a new model. Copy the method, then replace the producer labels, tensor names, product labels, model name, and dictionary entries with the target model's real contract.
+
+## The Mental Model
 
 A model runs through Triton in two halves:
 
@@ -30,7 +29,7 @@ reused unchanged.
 
 ---
 
-## What is MODEL-SPECIFIC (using CVN as the example target)
+## What Is MODEL-SPECIFIC (Using CVN as the Example Target)
 
 | # | Component | NuGraph reference | Example replacement for CVN | Lives in |
 |---|-----------|-------------------|----------------|----------|
@@ -51,7 +50,7 @@ That's the whole list. If you've handled 1-8, you have adapted the workflow for 
 > single vs multi-slice). `dictionaries/` now holds the full real `classes_def.xml` for
 > item 7, with the NuGraph additions marked `<!--New Add -->`.
 
-## What is INFRASTRUCTURE (reuse as-is, do NOT reinvent)
+## What Is INFRASTRUCTURE (Reuse As-is, Do NOT Reinvent)
 
 - GPVM login, SL7 container, `setup_icarus.sh`, `setup icaruscode`, token auth -- see `docs/01`.
 - The Triton **launch mechanism** (apptainer, the `setup_tritonserver-*.sh` pattern) -- `docs/03`.
@@ -63,7 +62,7 @@ That's the whole list. If you've handled 1-8, you have adapted the workflow for 
 
 ---
 
-## The four modules you should know (single->multi, libtorch->NuSonic)
+## The Four Modules You Should Know (Single->multi, Libtorch->NuSonic)
 
 There are four flavours of the inference module. The axes are **(libtorch vs NuSonic/Triton)**
 and **(single-slice vs multi-slice)**:
@@ -87,24 +86,24 @@ Reference links (NuGraph):
 
 ---
 
-## Step-by-step adaptation checklist (CVN shown as the worked example)
+## Step-by-step Adaptation Checklist (CVN Shown as the Worked Example)
 
 > Tick these in order. Each step has a "done when" so you know to move on.
 
-### Phase 0 -- environment (one-time, identical to NuGraph)
+### Phase 0 -- Environment (One-time, Identical to NuGraph)
 - [ ] Get onto a GPVM and into the SL7 image -- `docs/01`.
 - [ ] Set up `icaruscode` + your dev area, get a token -- `docs/01`.
 - [ ] **Done when:** `echo $MRB_TOP` points at *your* dev area, not `/cvmfs/...`
       (see Error 90 in `docs/07`).
 
-### Phase 1 -- get a working reference chain for the target model (no Triton yet)
+### Phase 1 -- Get a Working Reference Chain for the Target Model (No Triton Yet)
 - [ ] Find the branch / code that already runs the target model in the ICARUS chain. (For
       NuGraph this was Riccardo & Giuseppe's branch.) Ask the ML reco group.
 - [ ] Run the target model locally (libtorch) end-to-end on ~5 events; confirm exit code 0.
 - [ ] **Done when:** you can produce a valid output ROOT file with the target model's products
       and inspect its TTrees (`docs/02`).
 
-### Phase 2 -- (a) target model via local Triton on the GPVM (CPU)
+### Phase 2 -- (a) Target Model via Local Triton on the GPVM (CPU)
 - [ ] Deploy / locate the target model in a Triton `model_repository` with a
       `config.pbtxt` -- `server/`. Get its **model name** and tensor spec.
 - [ ] For a CVN-style adaptation, create `fcl/cvn/cvn_icarus_triton.fcl` and a top-level
@@ -114,7 +113,7 @@ Reference links (NuGraph):
 - [ ] **Done when:** the server log shows the target model `READY` and the metrics
       endpoint reports successful inference requests (`docs/03`, `docs/06`).
 
-### Phase 3 -- (b) target model via EAF (GPU)
+### Phase 3 -- (B) Target Model via EAF (GPU)
 - [ ] Ask the model owner to upload the target model to the EAF `triton-models` bucket
       and fix its `config.pbtxt` -- `docs/04`.
 - [ ] Request EAF + MinIO access via Service Desk if you don't have it.
@@ -122,7 +121,7 @@ Reference links (NuGraph):
 - [ ] **Done when:** a job runs against EAF with exit code 0 and the **server-side**
       dashboard (Landscape) shows it running on GPU.
 
-### Phase 4 -- validate + stress test
+### Phase 4 -- Validate + Stress Test
 - [ ] Run the standard event-count scans; reproduce the time/memory/throughput plots
       (`analysis/notebooks`, `docs/06`).
 - [ ] Submit grid jobs and scale up (1k -> 10k jobs) -- `docs/05`.
@@ -131,14 +130,14 @@ Reference links (NuGraph):
 - [ ] **Done when:** you can state whether the target model stays in the stable regime or hits
       saturation, with dashboard evidence.
 
-### Phase 5 -- (c) NERSC / ASC *(future, blocked on accounts)*
+### Phase 5 -- (C) NERSC / ASC *(Future, Blocked on Accounts)*
 - [ ] Get NERSC / American Science Cloud accounts.
 - [ ] Re-point the server URL; the client fcls should otherwise be unchanged.
 - [ ] **Done when:** the same job runs against a non-EAF GPU endpoint.
 
 ---
 
-## Common issues that will bite you (learned the hard way on NuGraph)
+## Common Issues That Will Bite You (Learned the Hard Way on NuGraph)
 
 - **Most "file not found" (Error 90) errors are environment problems, not missing
   files.** If `$MRB_TOP` is empty you're running global `lar`, not your local build.

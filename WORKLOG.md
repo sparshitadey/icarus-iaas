@@ -1,8 +1,8 @@
-# WORKLOG -- chronological history
+# Worklog -- Chronological History
 
-A distilled timeline of what was actually done, in order, so the next person can see
-*how* the working state was reached (not just the final recipe). Detail lives in the
-original lab log; this is the index. Dates are 2026.
+> A compressed record of the path to the working NuGraph2 IaaS benchmark: what was tried, what failed, and what finally became reproducible.
+
+The goal is provenance, not polish. Use this file to understand why the repository is structured the way it is; use `docs/` for the cleaner recipes. Dates are 2026.
 
 | Date | What happened | Outcome / lesson |
 |------|---------------|------------------|
@@ -32,14 +32,14 @@ original lab log; this is the index. Dates are 2026.
 | Apr 21 | Confirmed **files-per-job is not a concurrency knob** | Need multi-slice/multi-batch to create concurrent load (`docs/06`) |
 | May 31 | Paused IaaS meetings (DUNE collab meeting etc.); resuming | Next: test new batch-processing fcls |
 
-## Where things stand now
+## Where Things Stand Now
 
 - ✅ (a) local Triton on GPVM, ✅ (b) Triton via EAF on GPU -- both reproducible.
 - 🔧 Multi-slice / multi-batch fcls + module work -- **code ready, testing in progress**
   (will be added to `fcl/` and the module references when validated).
 - ⏳ Stress test to actual saturation; then (c) NERSC / American Science Cloud (needs accounts).
 
-## Coming soon (to be added to this repo)
+## Coming Soon (to Be Added to This Repo)
 
 - The multi-slice / multi-batch fcls (-> `fcl/`) and the NuSonic-multi-slice module reference.
 - The plotting + log-scan notebooks (-> `analysis/notebooks/`).

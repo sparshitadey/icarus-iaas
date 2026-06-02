@@ -1,4 +1,8 @@
-# 04 -- (b) Triton via EAF (GPU)
+# 04 -- Triton Through EAF
+
+> Stage (b): move the same model access pattern onto EAF GPU infrastructure and use server-side logs to verify what is actually happening.
+
+---
 
 The Elastic Analysis Facility (EAF) hosts GPU nodes (Nvidia A100). Here the client
 fcls point at a remote EAF Triton endpoint instead of a local server, so inference
@@ -7,7 +11,7 @@ runs on GPU. The client code barely changes from stage (a) -- mostly the **URL**
 
 Useful EAF docs: <https://eafdocs.fnal.gov/master/01_inference.html>
 
-## Prerequisites (one-time)
+## Prerequisites (One-time)
 
 - **EAF account** -- request via Service Desk (approval took ~a few days for NuGraph).
 - **MinIO access** -- needed to see the model bucket and read server-side logs.
@@ -23,7 +27,7 @@ Useful EAF docs: <https://eafdocs.fnal.gov/master/01_inference.html>
 - Server-side logs (Landscape): <https://landscape.fnal.gov/monitor/d/mRzFgCySz/triton-logs?orgId=1>
 - Model bucket (MinIO): <https://minio-eaf.fnal.gov/>
 
-## The fcls
+## The FCLs
 
 Duplicate the stage-(a) Triton fcls to `*_eaf.fcl` and point them at the EAF URL:
 - `nugraph_icarus_triton_eaf.fcl`
@@ -52,7 +56,7 @@ The `> triton_debug.log 2>&1` is optional but gives you a clean **client-side** 
 A good early sign: the first log lines show you can reach the server via EAF and it
 searches for the model. If the model loads + runs, you get exit code 0.
 
-## "Am I really on GPU?"
+## "Am I Really on GPU?"
 
 The LArSoft summary prints "CPU Memory/Time" **regardless of CPU/GPU** -- it's a
 `lar -c` artefact, not a real indicator. To confirm GPU, add diagnostics to the
@@ -70,7 +74,7 @@ print and was removed.)
 > similar at tiny scale. The GPU win appears at scale and is what stress testing
 > (`docs/06`) is for.
 
-## Common EAF failures
+## Common EAF Failures
 
 See `docs/07`: Error 65 (server-side env), Error 1 (model attribute / stale env),
 MinIO timeouts, `evhtp ODDITY`, and scheduled-maintenance downtime.

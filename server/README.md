@@ -1,4 +1,8 @@
-# server -- Triton server side
+# Triton Server Reference
+
+> The server-side pieces: local launch scripts, grid launch mechanics, model-repository layout, and MinIO/EAF provenance.
+
+---
 
 The **server half** of the pipeline. For local/GPVM testing you launch Triton yourself
 with the scripts here; for EAF the model owner deploys the model into the EAF bucket
@@ -10,7 +14,7 @@ Files here:
 - `setup_tritonserver-nugraph-v0_grid.sh` -- grid launch (finds a port, injects the URL).
 - `config_templates/config.pbtxt.template` -- **placeholder** (real config lives on MinIO; see below).
 
-## The two launch scripts (real)
+## The Two Launch Scripts (Real)
 
 Both run NVIDIA Triton inside an **apptainer** container shipped on CVMFS:
 `/cvmfs/icarus.opensciencegrid.org/containers/tritonserver/nugraph-v0/`, write a
@@ -39,7 +43,7 @@ It expects `$FCL` (or `$1`) = the fcl to inject the URL into.
 > use something like `setup_tritonserver-cvn-v0.sh`, but the port-finding and
 > apptainer mechanics stay identical.
 
-## model_repository layout
+## Model_repository Layout
 
 Triton expects a versioned dir per model with a `config.pbtxt`:
 ```
@@ -51,7 +55,7 @@ Triton expects a versioned dir per model with a `config.pbtxt`:
 ```
 On EAF the bucket is MinIO: `triton-models/<model_name>` (<https://minio-eaf.fnal.gov/>).
 
-## config.pbtxt & model.py -- DEFERRED (on MinIO)
+## Config.pbtxt & Model.py -- DEFERRED (on MinIO)
 
 These live on MinIO, not in the local dev area, so they're not in the repo yet.
 `config_templates/config.pbtxt.template` is a **placeholder based on the WCT DNN ROI
@@ -65,7 +69,7 @@ You can also dump the live model's IO contract for reference:
 curl -s localhost:8000/v2/models/nugraph2_icarus_mpvmprbnb
 ```
 
-## Server-side environment common issues (caused real failures -- see docs/07)
+## Server-side Environment Common Issues (Caused Real Failures -- See Docs/07)
 
 - A stray `pynvml` import broke model load (Error 65, "unknown model"); it was unused
   and commented out. another model's `model.py` may have its own broken/unneeded imports.

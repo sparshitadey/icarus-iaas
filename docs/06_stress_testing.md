@@ -1,10 +1,16 @@
-# 06 -- Stress testing & monitoring
+# 06 -- Stress Testing
+
+> From working pipeline to scaling study: how to read queueing, latency, throughput, and failure behaviour as load increases.
+
+---
+
+![Queueing Regime](../assets/queueing_regime.png)
 
 The reason for IaaS is scale, so the real test is: **how does the server behave under
 load, and where does it saturate?** This doc is the methodology + the metrics that
 matter + the reference results to compare against.
 
-## What you're measuring
+## What You're Measuring
 
 From the LArSoft job summary and the Triton metrics:
 
@@ -20,14 +26,14 @@ Server-side (Triton metrics, port 8002 / Grafana):
 - **pending request count** -- backlog. The key saturation signal.
 - **queue duration** -- how long requests wait before compute.
 
-## Monitoring stack
+## Monitoring Stack
 
 - **Prometheus** scrapes the `:8002/metrics` endpoint (counts, durations, GPU/CPU use).
 - **Grafana** dashboards visualise it (inference rate, utilisation, latency, queue depth).
 - **Landscape** for EAF server-side Triton logs.
 - These let you compare CPU vs GPU, measure scalability, and justify production use.
 
-## The plots to make (reproduce these for any target model)
+## The Plots to Make (Reproduce These for Any Target Model)
 
 For an event-count scan (NuGraph used up to ~140 events, then grid jobs to 200k):
 1. **Runtime** (real time) vs number of events -- CPU (Apptainer) vs GPU (Triton EAF).
@@ -44,11 +50,11 @@ NuGraph plotting notebook is the template).
 > Processing **complete** files makes it go away. Concatenate/merge inputs or stick to
 > full-file multiples to avoid it.
 
-## Reference results -- the two regimes
+## Reference Results -- the Two Regimes
 
 These are the comparison points. The whole question is which regime your model lands in.
 
-### ICARUS (NuGraph) -- stable regime (good)
+### ICARUS (NuGraph) -- Stable Regime (Good)
 - 1k jobs (20k events): **98.3%** success (17/999 failed).
 - 10k jobs (200k events): **96.35%** success (365/10k failed; a few held on disk quota).
 - Inference compute stable ~120-160 ms; successful requests **scale with load**; **0
@@ -58,7 +64,7 @@ These are the comparison points. The whole question is which regime your model l
 - Conclusion: ICARUS is entering a queueing regime but stays **stable -- no runaway
   backlog** within the tested range. ~2.5× speedup on O(100)-scale GPU-via-Triton tests.
 
-### MicroBooNE -- saturated / queue-dominated regime (the failure mode to recognise)
+### MicroBooNE -- Saturated / Queue-dominated Regime (the Failure Mode to Recognise)
 - ~10k jobs, only ~854 successful -> **~8% success**.
 - The *model* was **not** the bottleneck (per-inference ~140-180 ms, stable).
 - Failure was **system-level saturation**: pending requests grew to **O(1000)**, queue
@@ -72,7 +78,7 @@ ran similar job counts. What matters is the **effective inference request rate a
 concurrency**. So pushing another model toward saturation needs *concurrency*, which is why
 multi-slice / multi-batch matters.
 
-## Why "more files per job" doesn't stress the server
+## Why "More Files per Job" Doesn't Stress the Server
 
 Tested directly on NuGraph (1 job/1 file vs 1 job/5 files): inference shows up as
 **isolated, serial spikes** -- one inference -> wait -> next event. More files just
@@ -85,7 +91,7 @@ concurrent load you need:
 That work is in progress (see `WORKLOG.md`); the new fcls + module changes are the
 path to actually finding ICARUS's saturation limit.
 
-## Batch-scanning many jobs for failures
+## Batch-scanning Many Jobs for Failures
 
 For large job sets, a notebook that scans the unpacked `log.tar` files across all jobs
 for error/exception/failure patterns is far faster than eyeballing logs. A template

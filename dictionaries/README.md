@@ -1,4 +1,8 @@
-# dictionaries -- ROOT dictionary fixes (Error 7)
+# ROOT Dictionary Fixes
+
+> The NuGraph Error-7 fix as a worked example: identify missing art products, register the dictionaries, rebuild, and repeat until the chain is serialisable.
+
+---
 
 When a model writes new data products (art associations), ROOT needs **dictionaries**
 for them or the job dies with **Error 7 / `DictionaryNotFound`** (see `docs/07`). For
@@ -13,7 +17,7 @@ register CVN's missing classes, not these.
 > `classes_def.xml`, and the matching headers are the last block of `classes.h`. Diff
 > against upstream `IcarusObj` to see exactly what was added.
 
-## Where the edits go
+## Where the Edits Go
 
 Two files in your dev area:
 - `srcs/icaruscode/icaruscode/IcarusObj/classes.h`
@@ -24,9 +28,9 @@ Then rebuild: `mrbsetenv && mrb i -j4 && mrbslp`.
 The error is **iterative**: each rebuild may reveal the next missing class. Read the
 exception -- it names the exact `art::Assns<...>` / `art::Ptr<...>` that's missing.
 
-## NuGraph worked example -- what was added
+## NuGraph Worked Example -- What Was Added
 
-### `classes.h` (added at the bottom)
+### `classes.h` (Added at the Bottom)
 ```cpp
 #include "lardataobj/RecoBase/Hit.h"
 #include "lardataobj/AnalysisBase/MVAOutput.h"   // anab::FeatureVector lives here
@@ -38,7 +42,7 @@ exception -- it names the exact `art::Assns<...>` / `art::Ptr<...>` that's missi
 (The first three were strictly required -- the build kept reporting them missing. The
 rest were added pre-emptively to avoid repeated rebuild cycles.)
 
-### `classes_def.xml` (added at the bottom)
+### `classes_def.xml` (Added at the Bottom)
 ```xml
 <!-- NuGraph: recob::Hit <-> anab::FeatureVector associations -->
 <class name="art::Assns<recob::Hit, anab::FeatureVector<1>, void>" />
@@ -67,7 +71,7 @@ rest were added pre-emptively to avoid repeated rebuild cycles.)
 <class name="art::Wrapper<std::vector<art::Ptr<recob::Shower>>>"/>
 ```
 
-## Diagnosing what's missing
+## Diagnosing What's Missing
 
 ```bash
 cd $MRB_SOURCE/icaruscode/icaruscode

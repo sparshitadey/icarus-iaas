@@ -1,4 +1,8 @@
-# fcl/cvn -- Example model-adaptation area (CVN)
+# CVN Adaptation Example
+
+> A concrete example area for mapping the NuGraph benchmark pattern onto a CVN-style workflow. This is an example adaptation, not the sole purpose of the repository.
+
+---
 
 This directory is an example of how the NuGraph benchmark files can be adapted for
 another ML inference stage, using CVN as the concrete case. The repo is not meant
@@ -9,7 +13,7 @@ model-specific knobs. The NuGraph files are real, so the mapping below is
 concrete -- open them side by side with whatever CVN (or other target-model)
 reconstruction fcl already exists in `icaruscode`.
 
-## Example files to create (mirror NuGraph)
+## Example Files to Create (Mirror NuGraph)
 
 ```
 fcl/cvn/
@@ -21,7 +25,7 @@ fcl/cvn/
 └── testinference_..._cvn_triton_eaf.fcl  TODO[CVN]
 ```
 
-## Per-knob mapping (NuGraph -> CVN example)
+## Per-knob Mapping (NuGraph -> CVN Example)
 
 | Knob in the NuGraph fcls | NuGraph value | Example CVN replacement |
 |---|---|---|
@@ -39,7 +43,7 @@ fcl/cvn/
 | multi-slice loader | `ICARUSNuGraphMultiLoader` | `TODO[CVN]` CVN multi loader |
 | multi-slice module | `ICARUSNuGraphInference` | `TODO[CVN]` |
 
-## Two things to copy *exactly* (don't reinvent -- they're infrastructure)
+## Two Things to Copy *Exactly* (Don't Reinvent -- They're Infrastructure)
 
 1. **serverURL handling.** Local/grid: leave `serverURL` **unset** in the fcl and let
    the launch script inject `localhost:<grpcport>` (you'll edit the producer names in
