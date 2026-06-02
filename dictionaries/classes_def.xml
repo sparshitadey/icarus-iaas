@@ -1,0 +1,139 @@
+<lcgdict>
+
+  <class name="icarus::SimEnergyDepositSummary" ClassVersion="10" >
+   <version ClassVersion="10" checksum="1932250066"/>
+  </class>
+
+  <class name="art::Wrapper<icarus::SimEnergyDepositSummary>"/>
+
+  <class name="sbn::OpDetWaveformMeta" ClassVersion="10" >
+   <version ClassVersion="10" checksum="1457230748"/>
+  </class>
+
+  <class name="art::Ptr<sbn::OpDetWaveformMeta>" />
+  <class name="std::vector<sbn::OpDetWaveformMeta>" />
+  <class name="art::Wrapper<std::vector<sbn::OpDetWaveformMeta>>" />
+
+  <!-- sbn::OpDetWaveformMeta - raw::OpDetWaveform associations -->
+  <class name="std::pair<art::Ptr<sbn::OpDetWaveformMeta>, art::Ptr<raw::OpDetWaveform>>" />
+  <class name="std::pair<art::Ptr<raw::OpDetWaveform>, art::Ptr<sbn::OpDetWaveformMeta>>" />
+  <class name="art::Assns<sbn::OpDetWaveformMeta, raw::OpDetWaveform>" />
+  <class name="art::Assns<raw::OpDetWaveform, sbn::OpDetWaveformMeta>" />
+  <class name="art::Wrapper<art::Assns<sbn::OpDetWaveformMeta, raw::OpDetWaveform>>" />
+  <class name="art::Wrapper<art::Assns<raw::OpDetWaveform, sbn::OpDetWaveformMeta>>" />
+  
+  <!-- sbn::OpDetWaveformMeta - icarus::trigger::OpticalTriggerGate::GateData_t associations -->
+  <class name="std::pair<art::Ptr<sbn::OpDetWaveformMeta>, art::Ptr<icarus::trigger::OpticalTriggerGate::GateData_t>>" />
+  <class name="std::pair<art::Ptr<icarus::trigger::OpticalTriggerGate::GateData_t>, art::Ptr<sbn::OpDetWaveformMeta>>" />
+  <class name="art::Assns<sbn::OpDetWaveformMeta, icarus::trigger::OpticalTriggerGate::GateData_t>" />
+  <class name="art::Assns<icarus::trigger::OpticalTriggerGate::GateData_t, sbn::OpDetWaveformMeta>" />
+  <class name="art::Wrapper<art::Assns<sbn::OpDetWaveformMeta, icarus::trigger::OpticalTriggerGate::GateData_t>>" />
+  <class name="art::Wrapper<art::Assns<icarus::trigger::OpticalTriggerGate::GateData_t, sbn::OpDetWaveformMeta>>" />
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- icarus::timing::PMTWaveformTimeCorrection -->
+  <class name="icarus::timing::PMTWaveformTimeCorrection" ClassVersion="11" >
+   <version ClassVersion="11" checksum="849345931"/>
+   <version ClassVersion="10" checksum="1609503266"/>
+  </class>
+
+  <class name="art::Ptr<icarus::timing::PMTWaveformTimeCorrection>"/>
+  <class name="std::vector<icarus::timing::PMTWaveformTimeCorrection>"/>
+  <class name="art::Wrapper<std::vector<icarus::timing::PMTWaveformTimeCorrection> >"/>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- icarus::timing::PMTBeamSignal -->
+  <class name="art::Wrapper<vector<icarus::timing::PMTBeamSignal> >"/>
+  <class name="icarus::timing::PMTBeamSignal"/>
+  <class name="vector<icarus::timing::PMTBeamSignal>"/>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- LArSoft object associations that are missing from LArSoft             -->
+  
+  <!-- recob::PFParticle - sim::BeamGateInfo associations -->
+  <class name="art::Assns<sim::BeamGateInfo, recob::PFParticle>" />
+  <class name="art::Assns<recob::PFParticle, sim::BeamGateInfo>" />
+  <class name="art::Wrapper<art::Assns<sim::BeamGateInfo, recob::PFParticle>>" />
+  <class name="art::Wrapper<art::Assns<recob::PFParticle, sim::BeamGateInfo>>" />
+  
+<!--  <class name="art::Assns<sim::BeamGateInfo, recob::Track>" />
+  <class name="art::Assns<recob::Track, sim::BeamGateInfo>" />
+  <class name="art::Wrapper<art::Assns<sim::BeamGateInfo, recob::Track>>" />
+  <class name="art::Wrapper<art::Assns<recob::Track, sim::BeamGateInfo>>" />  -->
+  
+  <!-- anab::T0 - sim::BeamGateInfo associations -->
+  <class name="std::pair<art::Ptr<sim::BeamGateInfo>, art::Ptr<anab::T0>>" />
+  <class name="std::pair<art::Ptr<anab::T0>, art::Ptr<sim::BeamGateInfo>>" />
+  <class name="art::Assns<sim::BeamGateInfo, anab::T0>" />
+  <class name="art::Assns<anab::T0, sim::BeamGateInfo>" />
+  <class name="art::Wrapper<art::Assns<sim::BeamGateInfo, anab::T0>>" />
+  <class name="art::Wrapper<art::Assns<anab::T0, sim::BeamGateInfo>>" />
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <!-- CRT matching metadata -->
+  <class name="icarus::CRTTPCMatchingInfo" ClassVersion="10" >
+   <version ClassVersion="10" checksum="3174835328"/>
+  </class>
+  <class name="std::vector<icarus::CRTTPCMatchingInfo>" />
+  
+  <!-- recob::Track - anab::T0 associations with CRT matching metadata -->
+<!--  <class name="art::Assns<recob::Track, anab::T0, icarus::CRTTPCMatchingInfo>" />
+  <class name="art::Assns<anab::T0, recob::Track, icarus::CRTTPCMatchingInfo>" />
+  <class name="art::Wrapper<art::Assns<recob::Track, anab::T0, icarus::CRTTPCMatchingInfo>>" />
+  <class name="art::Wrapper<art::Assns<anab::T0, recob::Track, icarus::CRTTPCMatchingInfo>>" /> -->
+  
+  <!-- sbn::crt::CRTHit - anab::T0 associations with CRT matching metadata -->
+  <class name="art::Assns<sbn::crt::CRTHit, anab::T0, icarus::CRTTPCMatchingInfo>" />
+  <class name="art::Assns<anab::T0, sbn::crt::CRTHit, icarus::CRTTPCMatchingInfo>" />
+  <class name="art::Wrapper<art::Assns<sbn::crt::CRTHit, anab::T0, icarus::CRTTPCMatchingInfo>>" />
+  <class name="art::Wrapper<art::Assns<anab::T0, sbn::crt::CRTHit, icarus::CRTTPCMatchingInfo>>" /> 
+
+  <!-- icarus::Hit -->
+    <class name="icarus::Hit" ClassVersion="-1">
+    <version ClassVersion="-1" checksum="3524685965"/>
+   </class>
+  <class name="art::Ptr<icarus::Hit>"/>
+  <!-- <class name="art::PtrVector<icarus::Hit>"/> -->
+  <class name="std::vector<art::Ptr<icarus::Hit>>"/>
+  <class name="std::vector<icarus::Hit>"/>
+  <class name="art::Wrapper< std::vector< icarus::Hit>>"/>
+  <class name="art::Wrapper< std::vector< art::Ptr<icarus::Hit>>>"/>
+  <class name="art::Assns<icarus::Hit,recob::ChannelROI,void>"/>
+  <class name="art::Assns<recob::ChannelROI,icarus::Hit,void>"/>
+  <class name="art::Wrapper<art::Assns<icarus::Hit,recob::ChannelROI,void>>"/>
+  <class name="art::Wrapper<art::Assns<recob::ChannelROI,icarus::Hit,void>>"/>
+
+
+  <!--New Add -->
+  <!-- NuGraph: recob::Hit <-> anab::FeatureVector associations -->
+  <class name="art::Assns<recob::Hit, anab::FeatureVector<1>, void>" />
+  <class name="art::Assns<recob::Hit, anab::FeatureVector<5>, void>" />
+  <class name="art::Wrapper<art::Assns<recob::Hit, anab::FeatureVector<1>, void>>" />
+  <class name="art::Wrapper<art::Assns<recob::Hit, anab::FeatureVector<5>, void>>" />
+
+  <class name="art::Assns<anab::FeatureVector<1>, recob::Hit, void>" />
+  <class name="art::Assns<anab::FeatureVector<5>, recob::Hit, void>" />
+  <class name="art::Wrapper<art::Assns<anab::FeatureVector<1>, recob::Hit, void>>" />
+  <class name="art::Wrapper<art::Assns<anab::FeatureVector<5>, recob::Hit, void>>" />
+
+  <class name="std::pair<art::Ptr<recob::Hit>, art::Ptr<anab::FeatureVector<1>>>" />
+  <class name="std::pair<art::Ptr<recob::Hit>, art::Ptr<anab::FeatureVector<5>>>" />
+  <class name="std::pair<art::Ptr<anab::FeatureVector<1>>, art::Ptr<recob::Hit>>" />
+  <class name="std::pair<art::Ptr<anab::FeatureVector<5>>, art::Ptr<recob::Hit>>" />
+
+  <class name="std::vector<art::Ptr<recob::Slice>>"/>
+  <class name="art::Wrapper<std::vector<art::Ptr<recob::Slice>>>"/>
+  <class name="std::vector<art::Ptr<recob::PFParticle>>"/>
+  <class name="art::Wrapper<std::vector<art::Ptr<recob::PFParticle>>>"/>
+  <class name="std::vector<art::Ptr<recob::Cluster>>"/>
+  <class name="art::Wrapper<std::vector<art::Ptr<recob::Cluster>>>"/>
+  <class name="std::vector<art::Ptr<recob::Hit>>"/>
+  <class name="art::Wrapper<std::vector<art::Ptr<recob::Hit>>>"/>
+  <class name="std::vector<art::Ptr<recob::Track>>"/>
+  <class name="art::Wrapper<std::vector<art::Ptr<recob::Track>>>"/>
+  <class name="std::vector<art::Ptr<recob::Shower>>"/>
+  <class name="art::Wrapper<std::vector<art::Ptr<recob::Shower>>>"/>
+
+
+</lcgdict>

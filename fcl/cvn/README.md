@@ -1,0 +1,52 @@
+# fcl/cvn -- CVN port (TODO)
+
+Build CVN's fcls here by copying `../nugraph/` and changing only the model-specific
+knobs. The NuGraph files are now real, so this mapping is concrete -- open them
+side by side with whatever CVN reconstruction fcl already exists in icaruscode.
+
+## Files to create (mirror NuGraph)
+
+```
+fcl/cvn/
+|---- cvn_icarus.fcl                        TODO[CVN]  prolog: libtorch (local)
+|---- testinference_..._cvn.fcl             TODO[CVN]  top-level, #includes the prolog
+|---- cvn_icarus_triton.fcl                 TODO[CVN]  prolog: Triton (local GPVM)
+|---- testinference_..._cvn_triton.fcl      TODO[CVN]
+|---- cvn_icarus_triton_eaf.fcl             TODO[CVN]  prolog: Triton (EAF)
+`---- testinference_..._cvn_triton_eaf.fcl  TODO[CVN]
+```
+
+## Per-knob mapping (NuGraph -> CVN)
+
+| Knob in the NuGraph fcls | NuGraph value | CVN |
+|---|---|---|
+| upstream prolog `#include` | `nugraph.fcl` | `TODO[CVN]` CVN's base fcl that defines its presets |
+| libtorch preset | `@local::NuGraphLibTorch` | `TODO[CVN]` CVN's libtorch preset |
+| Triton preset | `@local::ApptainerNuGraphNuSonicTriton` | `TODO[CVN]` CVN's NuSonic/Triton preset (if it exists; else port the module -- `docs/08` item 8) |
+| producer label(s) | `NuGraphCryoE` / `NuGraphCryoW` | `TODO[CVN]` (keep per-cryostat if CVN is per-cryostat) |
+| `TritonConfig.modelName` | `nugraph2_icarus_mpvmprbnb` | `TODO[CVN]` CVN model name in the bucket |
+| libtorch `modelFileName` | `model_mpvmpr_bnb_numu_cos.pt` | `TODO[CVN]` CVN weights file |
+| normalisation consts | `avgs_u/v/y`, `devs_u/v/y` | `TODO[CVN]` CVN's input normalisation (if any) |
+| loader input labels | `LoaderTool.hitInput/spsInput` | `TODO[CVN]` CVN's input product labels |
+| decoder input labels | `DecoderTools.*.hitInput` | `TODO[CVN]` |
+| EAF endpoint | `serverURL: "triton.fnal.gov:443"`, `ssl: true` | same (infrastructure, don't change) |
+| single-slice loader | `ICARUSNuGraphLoader` | `TODO[CVN]` CVN single loader |
+| multi-slice loader | `ICARUSNuGraphMultiLoader` | `TODO[CVN]` CVN multi loader |
+| multi-slice module | `ICARUSNuGraphInference` | `TODO[CVN]` |
+
+## Two things to copy *exactly* (don't reinvent -- they're infrastructure)
+
+1. **serverURL handling.** Local/grid: leave `serverURL` **unset** in the fcl and let
+   the launch script inject `localhost:<grpcport>` (you'll edit the producer names in
+   the script -- `server/README.md`). EAF: set `serverURL`/`ssl`/`modelVersion`/`verbose`
+   in the **top-level** `..._eaf.fcl`, exactly as NuGraph does.
+2. **Multi-slice wiring.** NuGraph already defines the multi-slice presets and just
+   comments them out of `reco`. Do the same for CVN: define `NCC*`/`NGMultiSlice*`/
+   `ngfilteredhits*` analogues, then enable by switching the loader to the Multi loader
+   and adding them to the path.
+
+## Done-when
+
+Each phase's "done when" is in `docs/08`. For the fcls specifically: the EAF job runs
+with exit code 0 and `curl -s localhost:8002/metrics | egrep "<cvn_model>"` shows
+successful inference requests.

@@ -1,0 +1,3 @@
+Add: scale_plots.ipynb (time/memory/throughput vs n-events, CPU vs GPU)
+     log_failure_scan.ipynb (batch-scan job log.tar for failure modes)
+See ../README.md.

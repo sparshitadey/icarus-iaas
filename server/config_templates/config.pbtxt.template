@@ -1,0 +1,32 @@
+# config.pbtxt -- annotated template for a Triton model
+#
+# This skeleton is based on the WCT DNN ROI reference config (Meghna/Mike's slides).
+# Every field marked TODO[CVN] is model-specific and must be set from the CVN model.
+# The input/output names + dtypes + dims here MUST match what the client fcl sends.
+
+name: "TODO_CVN_model_name"          # TODO[CVN]: must equal modelName in the fcl and the dir name
+platform: "pytorch_libtorch"         # or "python" (NuGraph used the python backend); TODO[CVN]
+max_batch_size: 1                    # TODO[CVN]: raise this once you do multi-batch (docs/06)
+
+input [
+  {
+    name: "INPUT__0"                 # TODO[CVN]: CVN's input tensor name
+    data_type: TYPE_FP32             # TODO[CVN]: match the model's dtype
+    dims: [ 3, 800, 600 ]            # TODO[CVN]: e.g. [channel, height, width] (no batch dim)
+  }
+]
+
+output [
+  {
+    name: "OUTPUT__0"                # TODO[CVN]: CVN's output tensor name
+    data_type: TYPE_FP32             # TODO[CVN]
+    dims: [ 1, 800, 600 ]            # TODO[CVN]: CVN output shape (e.g. class-score map)
+  }
+]
+
+# Notes:
+# - A model may have several inputs/outputs (NuGraph has many: hit-table tensors,
+#   spacepoint tables, semantic/filter outputs, x_* tensors). List each one here and
+#   mirror the names in the client fcl.
+# - You can dump a running model's IO contract to compare:
+#     curl -s localhost:8000/v2/models/<model_name>

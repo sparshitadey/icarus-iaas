@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Local environments and credentials
+.env
+.venv/
+venv/
+*.key
+*.pem
+token*
+secrets.*
+
+# Logs and generated outputs
+*.log
+*.out
+*.err
+log/
+logs/
+log_unpack/
+*.tar
+*.tar.gz
+*.tgz
+
+# Large/generated data products
+*.root
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.pkl
+*.pickle
+
+# LArSoft / grid outputs
+work/
+output/
+outputs/
+scratch/
+tmp/
+*.db
+*.sqlite
+
+# Editors / OS
+.DS_Store
+.vscode/
+.idea/

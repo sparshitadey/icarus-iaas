@@ -1,0 +1,129 @@
+###
+### Test fcl file for NuGraph inference. For each cryostat it runs two producers (ICARUSNuSliceHitsProducer and NuGraphInference) plus one analyzer (NuGraphAnalyzer).
+### Author: G. Cerati (FNAL) for original & Sparshita Dey (run through Triton)
+###
+############################################################
+# Triton (NuSonic) inference configuration
+#
+# IMPORTANT:
+#   - This FHiCL does NOT launch Triton.
+#   - Must include nugraph_icarus_triton.fcl
+#   - Remember to add the location of these files to the fcl search path e.g.: export FHICL_FILE_PATH=/exp/icarus/app/users/<USER>/<DEV_AREA>/srcs/icaruscode/icaruscode/TPC/NuGraph:${FHICL_FILE_PATH}
+#   - Start the Triton server first (in another terminal).
+#   - Then run: lar -c testinference_slice_icarus_triton.fcl ...
+############################################################
+
+#include "nugraph_icarus_triton.fcl"
+#include "services_common_icarus.fcl"
+#include "services_icarus_simulation.fcl"
+
+process_name: testinference
+
+services:
+{
+  TFileService:          { fileName: "reco_hist.root" }
+  TimeTracker:           {}
+  MemoryTracker:         {}
+  RandomNumberGenerator: {}
+  @table::icarus_common_services
+  @table::icarus_backtracking_services 
+  message:               @local::icarus_message_services_prod_debug
+  ParticleInventoryService: { 
+        ParticleInventory: {
+        EveIdCalculator: "EmEveIdCalculator"
+        G4ModuleLabel: "largeant"
+	OverrideRealData: true
+     }
+  }
+}
+
+source:
+{
+  module_type: RootInput
+  maxEvents:   -1
+}
+
+outputs:
+{
+ rootOutput:
+ {
+   module_type: RootOutput
+   dataTier: "reconstructed"
+   compressionLevel: 1
+   saveMemoryObjectThreshold: 0
+   fileName: "%ifb_%tc-%p.root"
+   fileProperties: {maxInputFiles: 1}
+   checkFileName: false
+   SelectEvents: []
+   outputCommands: [
+         "keep *_*_*_*"
+         #"drop *_*_*_*",
+         #"keep *_*_*_testinference"
+     ]
+ }
+}
+
+physics:
+{
+
+  producers:
+  {
+    nuslhitsCryoE: @local::nuslhitsCryoE
+    nuslhitsCryoW: @local::nuslhitsCryoW
+    #nuslhits: {
+    #  module_type:             "HitMerger"
+    #  HitProducerLabelVec:     ["nuslhitsCryoE","nuslhitsCryoW"]
+    #}
+    NuGraphCryoE: @local::NuGraphCryoE
+    NuGraphCryoW: @local::NuGraphCryoW
+  }
+  analyzers:
+  {
+    NuGraphAnaCryoE: { 
+      module_type: "NuGraphAnalyzer"
+      NuGraphLabel: "NuGraphCryoE"
+    }
+    NuGraphAnaCryoW: { 
+      module_type: "NuGraphAnalyzer"
+      NuGraphLabel: "NuGraphCryoW"
+    }
+  }
+
+  reco: [nuslhitsCryoE, nuslhitsCryoW, NuGraphCryoE, NuGraphCryoW]
+  #reco: [ nuslhitsCryoE, NuGraphCryoE]
+  trigger_paths:       [ reco ]
+
+  ana: [NuGraphAnaCryoE,NuGraphAnaCryoW]
+  #ana: [NuGraphAnaCryoE]
+  streamROOT:         [ rootOutput ]
+  end_paths:          [ ana, streamROOT ]
+}
+
+#physics.producers.nuslhitsCryoE.module_type: "ICARUSTrueNuSliceHitsProducer"
+#physics.producers.nuslhitsCryoW.module_type: "ICARUSTrueNuSliceHitsProducer"
+
+#physics.producers.NuGraphCryoE.debug: true
+#physics.producers.NuGraphCryoW.debug: true
+
+services.BackTrackerService.BackTracker.G4ModuleLabel: "largeant"
+services.BackTrackerService.BackTracker.SimChannelModuleLabel: "daq:simpleSC"
+
+# --- CryoE via Triton ---
+NuGraphCryoE: @local::ApptainerNuGraphNuSonicTriton
+
+NuGraphCryoE.LoaderTool.tool_type: "ICARUSNuGraphLoader"
+NuGraphCryoE.LoaderTool.hitInput: "nuslhitsCryoE"
+NuGraphCryoE.LoaderTool.spsInput: "nuslhitsCryoE"
+
+NuGraphCryoE.DecoderTools.SemanticDecoderTool.hitInput: "nuslhitsCryoE"
+
+NuGraphCryoE.TritonConfig.modelName: "nugraph2_icarus_mpvmprbnb"
+
+# --- CryoW via Triton ---
+# Start from CryoE config and override inputs
+NuGraphCryoW: @local::NuGraphCryoE
+
+NuGraphCryoW.LoaderTool.hitInput: "nuslhitsCryoW"
+NuGraphCryoW.LoaderTool.spsInput: "nuslhitsCryoW"
+
+NuGraphCryoW.DecoderTools.SemanticDecoderTool.hitInput: "nuslhitsCryoW"
