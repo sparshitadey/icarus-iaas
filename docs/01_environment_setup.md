@@ -4,6 +4,10 @@
 
 ---
 
+> 📝 **Provenance note:** this page is the cleaned-up setup path. The longer chronological setup record lives in [Sparshita's detailed NuGraph/IaaS setup log](https://docs.google.com/document/d/1qyF87ECWyGI3lJy5Wjoq8Hrr3RefnoGOLZa6wySlyGs/edit?tab=t.0).
+
+---
+
 
 > The reproducible starting point: accounts, disks, tokens, MRB setup, and the ICARUS development area used by the NuGraph benchmark.
 

@@ -4,6 +4,10 @@
 
 ---
 
+> 🧭 **Detailed setup history:** for the longer chronological NuGraph/IaaS setup log behind this cleaned-up workflow, see [Sparshita's detailed NuGraph/IaaS setup log](https://docs.google.com/document/d/1qyF87ECWyGI3lJy5Wjoq8Hrr3RefnoGOLZa6wySlyGs/edit?tab=t.0).
+
+---
+
 ## Access Checklist
 
 | Check | Access / Account | Needed For | Where To Go / Who To Ask |

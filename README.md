@@ -28,6 +28,7 @@ This repository is a live technical handoff, not a frozen production manual. The
 - [What Is Reusable?](#what-is-reusable)
 - [Known Working Benchmark](#known-working-benchmark)
 - [Figures And Reference Slides](#figures-and-reference-slides)
+- [Detailed Work Log And Acknowledgements](#detailed-work-log-and-acknowledgements)
 - [Conventions](#conventions)
 
 ---
@@ -192,6 +193,18 @@ The `assets/` folder contains small documentation figures extracted from Sparshi
 - `assets/edge_effect_timing_memory.png` -- timing and memory edge-effect diagnostic plot.
 
 > 📝 External/reference slide decks are linked or cited in the notes where useful, but are not embedded as image assets unless they are part of this ICARUS NuGraph2 workflow material.
+
+---
+
+## Detailed Work Log And Acknowledgements
+
+A more detailed chronological work log is available here:
+
+- [Detailed NuGraph/IaaS setup log](https://docs.google.com/document/d/1qyF87ECWyGI3lJy5Wjoq8Hrr3RefnoGOLZa6wySlyGs/edit?tab=t.0)
+
+This repository is based on the NuGraph/IaaS workflow developed and tested by Sparshita Dey. The linked log preserves the longer setup trail behind the cleaned workflow documented here.
+
+> 🙏 **Acknowledgements:** special thanks to Meghna and Giuseppe for useful guidance and discussions during the development of this workflow.
 
 ---
 
