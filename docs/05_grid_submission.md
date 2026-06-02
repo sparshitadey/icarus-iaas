@@ -4,7 +4,7 @@ Once a single job works against EAF, you scale out on the grid with
 **LArBatch / `project.py`**, driven by an XML stage definition. `project.py` manages
 the jobs so you don't track them by hand.
 
-Useful links (replace `<you>` / `<USER>` in the URL before sharing or bookmarking):
+Useful links:
 - General grid submission instructions (FIFE).
 - Job dashboard: <https://fifemon.fnal.gov/monitor/d/000000116/user-batch-details?orgId=1&var-cluster=fifebatch&var-user=<you>>
 - "Why are my jobs held": <https://fifemon.fnal.gov/monitor/d/000000146/why-are-my-jobs-held?orgId=1&var-user=<you>>
@@ -79,7 +79,12 @@ was needed), **Error 137** (memory -- raise the quota in the XML).
 ## Example XML files (reference)
 
 - Giuseppe (NG2): `/exp/icarus/app/users/cerati/icaruscode-v10/srcs/testnuml-new.xml`
-- NuGraph Triton via EAF working example: `/exp/icarus/app/users/<USER>/<DEV_AREA>/GridWork/testsubmit.xml`
+- Sparshita's NuGraph Triton-via-EAF working XML reference:
+  `/exp/icarus/app/users/sdey2/icaruscode-v10_06_00_01p01_rtriozzi/GridWork/testsubmit.xml`
+
+  This is included as a provenance/reference path. A new user should copy the
+  template in `grid/testsubmit.xml` and replace the user, output, work, and
+  tarball paths before submitting.
 - Riccardo (full gen->CAF production chain):
   `/exp/icarus/app/users/rtriozzi/productions/NuGraph/.../Gridjob_NuMI_Nominal_NuGraphReco_AllSlices_HIPTagger_moreStats.xml`
 

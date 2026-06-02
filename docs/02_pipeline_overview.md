@@ -3,12 +3,12 @@
 ## The standard production chain
 
 ```
- MC sim / Data -> Stage0 -> Stage1 -> CAF Maker -> SBN ML CAF Maker -> analysis
-                    |          |
-       noise filter,|          | 3D space-points, PANDORA reconstruction
-       deconvolution|          |
-       /ROIs, hit   |          `---> (Larcv files) -> ML reconstruction (SPINE)
-       finding      |
+ MC sim / Data ─▶ Stage0 ─▶ Stage1 ─▶ CAF Maker ─▶ SBN ML CAF Maker ─▶ analysis
+                    │          │
+       noise filter,│          │ 3D space-points, PANDORA reconstruction
+       deconvolution│          │
+       /ROIs, hit   │          └─▶ (Larcv files) ─▶ ML reconstruction (SPINE)
+       finding      │
 ```
 
 - **Stage0 -> Stage1** is the part we care about for NuGraph. NuGraph runs *after*
@@ -29,7 +29,7 @@ interactions in a LArTPC. It enhances Pandora and outputs:
 
 Its outputs are stored as art associations between `recob::Hit` and
 `anab::FeatureVector<N>` -- which is exactly why the ROOT dictionary work
-(`dictionaries/`, Error 7) was needed. **CVN's outputs will be different products**,
+(`dictionaries/`, Error 7) was needed. **Another model may write different products**,
 so expect a different (but analogous) set of dictionary entries.
 
 ## Reference run: standard Stage0 -> Stage1 (no Triton, no ML)

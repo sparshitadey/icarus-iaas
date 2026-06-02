@@ -20,7 +20,7 @@ This is the short operational guide for the server-side pieces of IaaS.
 
 ## Access needed
 
-A new student will probably need:
+A new user will probably need:
 
 - Fermilab services account and password.
 - ICARUS GPVM access.
@@ -56,7 +56,7 @@ A Triton model repository normally looks like:
     model.pt     # possible libtorch/PyTorch model file for other workflows
 ```
 
-`config.pbtxt` defines the model name, backend/platform, max batch size, inputs, and outputs. For CVN, this file is one of the main things to diff against the NuGraph worked example.
+`config.pbtxt` defines the model name, backend/platform, max batch size, inputs, and outputs. For any target model, this file is one of the main things to diff against the NuGraph worked example. CVN is one concrete example.
 
 ## Quick checks
 

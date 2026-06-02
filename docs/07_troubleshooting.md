@@ -1,7 +1,7 @@
 # 07 -- Troubleshooting (error-code catalogue)
 
 Indexed by what you'll actually see. Every entry here was hit and solved during the
-NuGraph work; the same failures will recur for CVN because they're mostly
+NuGraph work; the same failures can recur for CVN or any other target model because they're mostly
 environment/wiring issues, not model issues.
 
 ---
@@ -74,8 +74,8 @@ Fix -- register the classes, then rebuild. Add the relevant headers to
 ```bash
 mrbsetenv && mrb i -j4 && mrbslp
 ```
-See `dictionaries/` for the exact NuGraph additions as a worked example. **For CVN
-the missing classes will be different** -- read the error, it tells you which
+See `dictionaries/` for the exact NuGraph additions as a worked example. **For another
+model the missing classes may be different** -- read the error, it tells you which
 `art::Assns<...>` / `std::vector<art::Ptr<...>>` are missing, and add those.
 
 > The error is iterative: rebuild and it'll often tell you the *next* missing class.
@@ -93,7 +93,7 @@ client log. For NuGraph the root cause was a python import failure in the model 
 `ModuleNotFoundError: No module named 'pynvml.smi'`. The fix was to comment out the
 unused `pynvml` include in the model env (done by the server maintainers).
 
-Fix path for CVN: if you see this, capture the server log traceback and take it to
+Fix path for a target model: if you see this, capture the server log traceback and take it to
 whoever maintains the EAF model env -- the fix is almost always "a dependency the
 model's `model.py` imports isn't present (or is broken) in the deployed env."
 
@@ -105,8 +105,8 @@ attribute, e.g. `module 'nugraph.util' has no attribute 'FeatureExtension'`.
 
 Meaning: client + server wiring is **correct** (this is actually a good sign -- you're
 in the model now), but the deployed environment is missing/stale relative to the
-model code. Fix = update the server-side environment to match the model. For CVN,
-ensure the deployed env has the exact package versions the CVN checkpoint expects.
+model code. Fix = update the server-side environment to match the model. For a target model,
+ensure the deployed env has the exact package versions the checkpoint expects.
 
 > Useful tell: a run that errors here often still prints the time/memory summary,
 > which is what you eventually want anyway.

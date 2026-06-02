@@ -27,7 +27,7 @@ Server-side (Triton metrics, port 8002 / Grafana):
 - **Landscape** for EAF server-side Triton logs.
 - These let you compare CPU vs GPU, measure scalability, and justify production use.
 
-## The plots to make (reproduce these for CVN)
+## The plots to make (reproduce these for any target model)
 
 For an event-count scan (NuGraph used up to ~140 events, then grid jobs to 200k):
 1. **Runtime** (real time) vs number of events -- CPU (Apptainer) vs GPU (Triton EAF).
@@ -56,7 +56,7 @@ These are the comparison points. The whole question is which regime your model l
 - At higher load: queue time rises to ~1-3 s, pending requests appear but only
   **O(10-20)**, per-server queue time still ~ms; **throughput does not collapse**.
 - Conclusion: ICARUS is entering a queueing regime but stays **stable -- no runaway
-  backlog** within the tested range. ~2.5x speedup on O(100)-scale GPU-via-Triton tests.
+  backlog** within the tested range. ~2.5× speedup on O(100)-scale GPU-via-Triton tests.
 
 ### MicroBooNE -- saturated / queue-dominated regime (the failure mode to recognise)
 - ~10k jobs, only ~854 successful -> **~8% success**.
@@ -69,7 +69,7 @@ These are the comparison points. The whole question is which regime your model l
 
 **Takeaway:** job count alone is **not** a measure of saturation -- both experiments
 ran similar job counts. What matters is the **effective inference request rate and
-concurrency**. So pushing CVN toward saturation needs *concurrency*, which is why
+concurrency**. So pushing another model toward saturation needs *concurrency*, which is why
 multi-slice / multi-batch matters.
 
 ## Why "more files per job" doesn't stress the server

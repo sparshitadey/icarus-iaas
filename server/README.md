@@ -33,20 +33,21 @@ source setup_tritonserver-nugraph-v0.sh
 - runs `apptainer exec <container> tritonserver --model-repository /triton-server-config/models --http-port ... --grpc-port ... --metrics-port ...`.
 It expects `$FCL` (or `$1`) = the fcl to inject the URL into.
 
-> For CVN: copy whichever script you need to `setup_tritonserver-cvn-v0.sh`, point it
-> at the CVN container/model-repository, and change the producer names in the
-> `serverURL` injection lines (`NuGraphCryoE/W` -> CVN's module labels). The
-> port-finding and apptainer mechanics stay identical.
+> For another model: copy whichever script you need, point it at the target
+> container/model-repository, and change the producer names in the `serverURL`
+> injection lines (`NuGraphCryoE/W` -> the target model's module labels). CVN would
+> use something like `setup_tritonserver-cvn-v0.sh`, but the port-finding and
+> apptainer mechanics stay identical.
 
 ## model_repository layout
 
 Triton expects a versioned dir per model with a `config.pbtxt`:
 ```
 <model_repository>/            # in the container: /triton-server-config/models
-`---- <model_name>/              # e.g. nugraph2_icarus_mpvmprbnb
-    |---- config.pbtxt           # input/output tensor spec, platform, batch size
-    `---- 1/                     # version 1
-        `---- model.py           # python backend (NuGraph)  -- or model.pt for libtorch
+└── <model_name>/              # e.g. nugraph2_icarus_mpvmprbnb
+    ├── config.pbtxt           # input/output tensor spec, platform, batch size
+    └── 1/                     # version 1
+        └── model.py           # python backend (NuGraph)  -- or model.pt for libtorch
 ```
 On EAF the bucket is MinIO: `triton-models/<model_name>` (<https://minio-eaf.fnal.gov/>).
 
@@ -67,8 +68,8 @@ curl -s localhost:8000/v2/models/nugraph2_icarus_mpvmprbnb
 ## Server-side environment common issues (caused real failures -- see docs/07)
 
 - A stray `pynvml` import broke model load (Error 65, "unknown model"); it was unused
-  and commented out. CVN's `model.py` may have its own broken/unneeded imports.
+  and commented out. another model's `model.py` may have its own broken/unneeded imports.
 - A model attribute missing from the deployed env (`FeatureExtension` under
   `nugraph.util`) caused Error 1 *after* reaching `forward()`. Keep the deployed env
-  in sync with the model code; CVN's env must hold CVN's exact deps.
+  in sync with the model code; the target env must hold that model's exact deps.
 - Confirm GPU by adding device prints to `model.py` (`docs/04`).

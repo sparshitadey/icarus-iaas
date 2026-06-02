@@ -15,7 +15,7 @@
 -->
 
 <!DOCTYPE project [
-<!ENTITY user "CHANGEME_username">          <!-- TODO: your username; do not leave as CHANGEME_username -->
+<!ENTITY user "CHANGEME_username">          <!-- TODO: your username (was: sdey2) -->
 <!ENTITY release "v10_06_00_01p01">
 <!ENTITY releasetag "e26:prof">
 <!ENTITY name "ng2_eaf_test">

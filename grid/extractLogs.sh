@@ -3,7 +3,7 @@
 # extractLogs.sh -- pull and unpack log.tar from a list of (usually failed) grid jobs
 # into a local bad_logs/ dir, so you can grep them for failure modes.
 #
-# --------------------------------------------------------------------------
+# ──────────────────────────────────────────────────────────────────────────
 # PATHS ARE PARAMETERISED so you don't read/write anyone else's area.
 # Set BASE to YOUR job output directory (the <outdir> from your grid XML),
 # either by exporting it or editing the default below.
@@ -17,8 +17,8 @@
 # WHERE TO RUN: from any working dir you can write to (it creates ./bad_logs,
 # ./tmp_extract and a couple of summary txt files in $PWD). Run it on a GPVM
 # after the jobs have finished. Original campaign value was:
-#   /pnfs/icarus/scratch/users/<USER>/<PROJECT_OUTPUT_DIR>
-# --------------------------------------------------------------------------
+#   /pnfs/icarus/scratch/users/sdey2/v10_06_00_01p01/ng2_eaf_v1
+# ──────────────────────────────────────────────────────────────────────────
 
 set -euo pipefail
 

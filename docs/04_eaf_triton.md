@@ -14,8 +14,8 @@ Useful EAF docs: <https://eafdocs.fnal.gov/master/01_inference.html>
   Check the model is present: <https://minio-eaf.fnal.gov/> ->
   `triton-models/<model_name>` (NuGraph: `triton-models/nugraph2_icarus_mpvmprbnb`).
 - **The model must be uploaded + its `config.pbtxt` set up** on EAF. For NuGraph the
-  model owner (Giuseppe) did this. **For CVN you must arrange the same** -- the model
-  owner uploads the CVN model and config to the bucket.
+  model owner (Giuseppe) did this. **For another model you must arrange the same** -- the model
+  owner uploads the target model and config to the bucket. CVN is one example.
 
 ## Endpoints
 
@@ -29,7 +29,7 @@ Duplicate the stage-(a) Triton fcls to `*_eaf.fcl` and point them at the EAF URL
 - `nugraph_icarus_triton_eaf.fcl`
 - `testinference_slice_icarus_triton_eaf.fcl`
 
-(See `fcl/nugraph/` for what changed; `fcl/cvn/` for the CVN template.)
+(See `fcl/nugraph/` for what changed; `fcl/cvn/` for a CVN example adaptation template.)
 
 ## Run
 
@@ -55,7 +55,7 @@ searches for the model. If the model loads + runs, you get exit code 0.
 ## "Am I really on GPU?"
 
 The LArSoft summary prints "CPU Memory/Time" **regardless of CPU/GPU** -- it's a
-`lar -c` artifact, not a real indicator. To confirm GPU, add diagnostics to the
+`lar -c` artefact, not a real indicator. To confirm GPU, add diagnostics to the
 server-side `model.py` and re-upload, e.g.:
 ```python
 print("CUDA available:", torch.cuda.is_available())

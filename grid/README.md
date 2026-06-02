@@ -1,7 +1,7 @@
 # grid -- FermiGrid submission & log extraction
 
 Real, working grid workflow for running NuGraph inference (via EAF) on the grid with
-LArBatch / `project.py`. The same pattern applies to CVN -- only the fcl and the
+LArBatch / `project.py`. The same pattern applies to other ML inference stages -- only the fcl and the
 model-specific bits change.
 
 Files here:
@@ -9,7 +9,7 @@ Files here:
   the `&user;` entity (set it before running, see below).
 - `extractLogs.sh` -- pull + unpack `log.tar` from a list of jobs for failure analysis.
 
-> [safe] **Placeholders so nothing of anyone's gets overwritten.** `testsubmit.xml` won't
+> 🔒 **Placeholders so nothing of anyone's gets overwritten.** `testsubmit.xml` won't
 > run until you set `<!ENTITY user "...">` to your username and confirm the
 > `outdir` / `workdir` / tarball paths are yours. `extractLogs.sh` refuses to run
 > while its `BASE` still contains `CHANGEME`.
@@ -68,14 +68,14 @@ jobsub_rm      --constraint '(JobStatus=?=5) && (Owner=?="<USER>")'  # remove he
 
 ## The XML, field by field
 
-| Field | Meaning | Notes for CVN |
+| Field | Meaning | Model-specific notes |
 |-------|---------|---------------|
 | `&user;` (entity) | your username | **set this first** |
 | `<numevents>` | total events cap | -- |
 | `<resource>` | `DEDICATED,OPPORTUNISTIC` | leave as-is |
 | `<larsoft><local>` | your code tarball | rebuild when code changes |
 | `<inputlist>` | de-duplicated file list (`files_clean.list`) | dup *names* throw art errors |
-| `<fcl>` | **one** fcl only (two -> Error 90) | -> your CVN `..._eaf.fcl` |
+| `<fcl>` | **one** fcl only (two -> Error 90) | -> the target model `..._eaf.fcl` |
 | `<outdir>` / `<workdir>` | your scratch/resilient areas | **must be yours** |
 | `<numjobs>` / `<maxfilesperjob>` | scale knobs | files/job is NOT a concurrency knob (docs/06) |
 | `<memory>` / `<disk>` | resource request | raise on Error 137 / "disk usage greater than requested" |

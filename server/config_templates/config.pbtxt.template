@@ -1,26 +1,26 @@
-# config.pbtxt -- annotated template for a Triton model
+# config.pbtxt — annotated template for a Triton model
 #
 # This skeleton is based on the WCT DNN ROI reference config (Meghna/Mike's slides).
-# Every field marked TODO[CVN] is model-specific and must be set from the CVN model.
+# Every field marked TODO[MODEL] is model-specific and must be set from the target model.
 # The input/output names + dtypes + dims here MUST match what the client fcl sends.
 
-name: "TODO_CVN_model_name"          # TODO[CVN]: must equal modelName in the fcl and the dir name
-platform: "pytorch_libtorch"         # or "python" (NuGraph used the python backend); TODO[CVN]
-max_batch_size: 1                    # TODO[CVN]: raise this once you do multi-batch (docs/06)
+name: "TODO_MODEL_name"              # TODO[MODEL]: must equal modelName in the fcl and the dir name
+platform: "pytorch_libtorch"         # or "python" (NuGraph used the python backend); TODO[MODEL]
+max_batch_size: 1                    # TODO[MODEL]: raise this once you do multi-batch (docs/06)
 
 input [
   {
-    name: "INPUT__0"                 # TODO[CVN]: CVN's input tensor name
-    data_type: TYPE_FP32             # TODO[CVN]: match the model's dtype
-    dims: [ 3, 800, 600 ]            # TODO[CVN]: e.g. [channel, height, width] (no batch dim)
+    name: "INPUT__0"                 # TODO[MODEL]: target model input tensor name
+    data_type: TYPE_FP32             # TODO[MODEL]: match the model's dtype
+    dims: [ 3, 800, 600 ]            # TODO[MODEL]: e.g. [channel, height, width] (no batch dim)
   }
 ]
 
 output [
   {
-    name: "OUTPUT__0"                # TODO[CVN]: CVN's output tensor name
-    data_type: TYPE_FP32             # TODO[CVN]
-    dims: [ 1, 800, 600 ]            # TODO[CVN]: CVN output shape (e.g. class-score map)
+    name: "OUTPUT__0"                # TODO[MODEL]: target model output tensor name
+    data_type: TYPE_FP32             # TODO[MODEL]
+    dims: [ 1, 800, 600 ]            # TODO[MODEL]: target output shape (e.g. class-score map)
   }
 ]
 

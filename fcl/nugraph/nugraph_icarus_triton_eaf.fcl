@@ -8,14 +8,14 @@ BEGIN_PROLOG
 
 nuslhitsCryoE: {
   module_type:    "ICARUSNuSliceHitsProducer"
-  BaryMatchLabel: "tpcpmtbarycentrematchCryoE"
+  BaryMatchLabel: "tpcpmtbarycentermatchCryoE"
   SliceLabel:     "pandoraGausCryoE"
   SpsLabel:       "cluster3DCryoE"
 }
 
 nuslhitsCryoW: {
   module_type:    "ICARUSNuSliceHitsProducer"
-  BaryMatchLabel: "tpcpmtbarycentrematchCryoW"
+  BaryMatchLabel: "tpcpmtbarycentermatchCryoW"
   SliceLabel:     "pandoraGausCryoW"
   SpsLabel:       "cluster3DCryoW"
 }

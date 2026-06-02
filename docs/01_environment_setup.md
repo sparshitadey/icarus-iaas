@@ -3,22 +3,6 @@
 Everything here is **infrastructure** -- identical for NuGraph, CVN, or any model.
 Do it once and you have a working dev area.
 
-
-## Accounts and access checklist
-
-Before doing the setup below, make sure you have:
-
-- Fermilab services account and password.
-- ICARUS GPVM access.
-- Write access to your own `/exp/icarus/app/users/<you>` area.
-- The ICARUS token workflow working (`htgettoken` / `httokensh`).
-- EAF / MinIO access if you will run through remote Triton; see `docs/11_triton_eaf_minio_cheatsheet.md`.
-- Access to the relevant FIFE and Landscape dashboards for job and Triton monitoring.
-
-For full rebuilds, prefer `icarusbuild02` rather than a GPVM if you have access. On
-`icarusbuild02`, using more build cores, e.g. `mrb i -j20`, is reasonable. On a GPVM,
-stick to smaller builds such as `mrb i -j4`.
-
 ## Logging in
 
 ```bash
@@ -85,9 +69,9 @@ mrb i -j4          # build; takes a few minutes with no progress output -- be pa
 mrbslp
 ```
 
-> **For CVN:** the only thing that changes here is *which branch* you check out -- find
-> the branch that has CVN integrated in the ICARUS chain (ask the ML reco group), and
-> use a matching tag/qualifier. The MRB mechanics are identical.
+> **For another ML stage:** the only thing that changes here is *which branch* you check out -- find
+> the branch that has the target model integrated in the ICARUS chain (ask the ML reco group), and
+> use a matching tag/qualifier. CVN is one example; the MRB mechanics are identical.
 
 ## Re-entering an existing dev area (subsequent sessions)
 

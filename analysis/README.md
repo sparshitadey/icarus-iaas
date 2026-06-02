@@ -28,5 +28,5 @@ produce a temporary ACLiC ROOT file -> a memory/latency bump. It's **not a bug**
 Filter to full-file multiples or merge inputs when interpreting plots (`docs/06`).
 
 > The canonical NuGraph notebooks + data points live in the original working-area /
-> shared notebook; drop copies here so the CVN student can reuse the plotting code
-> directly and just point it at CVN job outputs.
+> shared notebook. Drop copies here so the same plotting code can be reused for
+> any target-model scale test; CVN job outputs are one example.

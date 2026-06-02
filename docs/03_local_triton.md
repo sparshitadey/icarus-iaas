@@ -1,6 +1,6 @@
 # 03 -- (a) Triton server locally on a GPVM (CPU)
 
-Goal of this stage: prove the **client<->server wiring** works end-to-end. The GPVM has
+Goal of this stage: prove the **client↔server wiring** works end-to-end. The GPVM has
 no GPU, so this runs CPU-only -- that's expected and fine. The point is to validate
 the fcls and the request path before going to EAF.
 
@@ -77,6 +77,6 @@ killall -9 /cvmfs/oasis.opensciencegrid.org/mis/apptainer/1.3.2/x86_64/libexec/a
 lar -c <your>.fcl --debug-config=full.fcl     # dumps the fully-resolved config
 ```
 
-> **For CVN:** make CVN copies of the launch script and the two fcls (model name +
+> **For another target model:** make model-specific copies of the launch script and the two fcls. For CVN, use the `fcl/cvn/` examples (model name +
 > tensor names change; the server-launch mechanics don't). See `fcl/cvn/` and
 > `server/`.

@@ -1,7 +1,7 @@
 # fcl/nugraph -- reference (working) NuGraph fcls
 
 These are the **real, working** NuGraph fcls (author: G. Cerati; Triton/EAF variants:
-S. Dey). They are the template the CVN port copies from. The only path that was
+S. Dey). They are the benchmark files to compare against when adapting the workflow to another model. The only path that was
 edited is a comment in `testinference_slice_icarus_triton.fcl`, where the dev-area
 path is shown as `/exp/icarus/app/users/<USER>/<DEV_AREA>/...`.
 
@@ -67,5 +67,4 @@ NCC slices, and add `NCCSlices* -> NGMultiSlice* -> ngfilteredhits*` into `reco`
 | multi-slice loader | `ICARUSNuGraphMultiLoader` |
 | multi-slice module | `ICARUSNuGraphInference` |
 
-For CVN, find the equivalents of these and change only them -- see `../cvn/README.md`
-and `docs/08`.
+For another model, find the equivalents of these and change only them. `../cvn/README.md` shows CVN as one concrete adaptation example; `docs/08` gives the general recipe.

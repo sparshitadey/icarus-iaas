@@ -2,12 +2,12 @@
 
 When a model writes new data products (art associations), ROOT needs **dictionaries**
 for them or the job dies with **Error 7 / `DictionaryNotFound`** (see `docs/07`). For
-NuGraph this meant registering the `recob::Hit <-> anab::FeatureVector<N>` associations
+NuGraph this meant registering the `recob::Hit ↔ anab::FeatureVector<N>` associations
 in `icaruscode/IcarusObj/`. This folder documents exactly what was added, as a
 worked example to copy the *method* from -- **CVN's products will differ**, so you'll
 register CVN's missing classes, not these.
 
-> [done] The **full real files** are now in this folder: `classes.h` and `classes_def.xml`
+> ✅ The **full real files** are now in this folder: `classes.h` and `classes_def.xml`
 > (copied verbatim from `srcs/icaruscode/icaruscode/IcarusObj/`). The NuGraph-specific
 > additions are marked with a `<!--New Add -->` comment near the bottom of
 > `classes_def.xml`, and the matching headers are the last block of `classes.h`. Diff
@@ -76,8 +76,8 @@ LIBDIR=/exp/icarus/app/users/<you>/<dev>/build_slf7.x86_64/icaruscode/slf7.x86_6
 ls $LIBDIR | egrep -i "dict|NuGraph" | head
 grep -R "FeatureVector<5>" -n $LIBDIR/*.rootmap 2>/dev/null | head
 ```
-Empty results => no dictionary generated => add the classes above and rebuild.
+Empty results ⇒ no dictionary generated ⇒ add the classes above and rebuild.
 
-> **For CVN:** run the job, read the `DictionaryNotFound` exception, and register the
-> classes it names (CVN's own associations / vectors). Same procedure, different
-> product types.
+> **For another model:** run the job, read the `DictionaryNotFound` exception, and
+> register the classes it names (the target model's own associations / vectors).
+> Same procedure, different product types; CVN is one example.

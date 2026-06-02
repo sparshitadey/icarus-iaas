@@ -1,24 +1,29 @@
-# fcl/cvn -- CVN port (TODO)
+# fcl/cvn -- Example model-adaptation area (CVN)
 
-Build CVN's fcls here by copying `../nugraph/` and changing only the model-specific
-knobs. The NuGraph files are now real, so this mapping is concrete -- open them
-side by side with whatever CVN reconstruction fcl already exists in icaruscode.
+This directory is an example of how the NuGraph benchmark files can be adapted for
+another ML inference stage, using CVN as the concrete case. The repo is not meant
+to be CVN-only; CVN is simply a useful example of which knobs would change.
 
-## Files to create (mirror NuGraph)
+Build the target model's fcls by copying `../nugraph/` and changing only the
+model-specific knobs. The NuGraph files are real, so the mapping below is
+concrete -- open them side by side with whatever CVN (or other target-model)
+reconstruction fcl already exists in `icaruscode`.
+
+## Example files to create (mirror NuGraph)
 
 ```
 fcl/cvn/
-|---- cvn_icarus.fcl                        TODO[CVN]  prolog: libtorch (local)
-|---- testinference_..._cvn.fcl             TODO[CVN]  top-level, #includes the prolog
-|---- cvn_icarus_triton.fcl                 TODO[CVN]  prolog: Triton (local GPVM)
-|---- testinference_..._cvn_triton.fcl      TODO[CVN]
-|---- cvn_icarus_triton_eaf.fcl             TODO[CVN]  prolog: Triton (EAF)
-`---- testinference_..._cvn_triton_eaf.fcl  TODO[CVN]
+├── cvn_icarus.fcl                        TODO[CVN]  prolog: libtorch (local)
+├── testinference_..._cvn.fcl             TODO[CVN]  top-level, #includes the prolog
+├── cvn_icarus_triton.fcl                 TODO[CVN]  prolog: Triton (local GPVM)
+├── testinference_..._cvn_triton.fcl      TODO[CVN]
+├── cvn_icarus_triton_eaf.fcl             TODO[CVN]  prolog: Triton (EAF)
+└── testinference_..._cvn_triton_eaf.fcl  TODO[CVN]
 ```
 
-## Per-knob mapping (NuGraph -> CVN)
+## Per-knob mapping (NuGraph -> CVN example)
 
-| Knob in the NuGraph fcls | NuGraph value | CVN |
+| Knob in the NuGraph fcls | NuGraph value | Example CVN replacement |
 |---|---|---|
 | upstream prolog `#include` | `nugraph.fcl` | `TODO[CVN]` CVN's base fcl that defines its presets |
 | libtorch preset | `@local::NuGraphLibTorch` | `TODO[CVN]` CVN's libtorch preset |
@@ -41,12 +46,12 @@ fcl/cvn/
    the script -- `server/README.md`). EAF: set `serverURL`/`ssl`/`modelVersion`/`verbose`
    in the **top-level** `..._eaf.fcl`, exactly as NuGraph does.
 2. **Multi-slice wiring.** NuGraph already defines the multi-slice presets and just
-   comments them out of `reco`. Do the same for CVN: define `NCC*`/`NGMultiSlice*`/
+   comments them out of `reco`. For a CVN-style adaptation, do the same: define `NCC*`/`NGMultiSlice*`/
    `ngfilteredhits*` analogues, then enable by switching the loader to the Multi loader
    and adding them to the path.
 
 ## Done-when
 
-Each phase's "done when" is in `docs/08`. For the fcls specifically: the EAF job runs
+Each phase's "done when" is in `docs/08`. For the fcls specifically: the target-model EAF job runs
 with exit code 0 and `curl -s localhost:8002/metrics | egrep "<cvn_model>"` shows
 successful inference requests.

@@ -46,11 +46,11 @@ O(months). Speeding up inference is the highest-leverage place to work.
 
 ```
 reconstruction job (client)
-        |  API call over TCP (gRPC)
-        v
+        │  API call over TCP (gRPC)
+        ▼
    Triton server
-        |  (running inside an Apptainer container)
-        v
+        │  (running inside an Apptainer container)
+        ▼
    model inference (on GPU, ideally)
 ```
 
@@ -66,7 +66,7 @@ the local Torch service and:
 5. has a **soft-fail** option (return a zero tensor instead of crashing) so the
    calling node can continue -- added to avoid seg faults during testing.
 
-Reported result: **~65x faster** inference on an A100 (EAF) vs CPU, giving a 2-3x
-overall workflow speedup (because DNN ROI was ~2/3 of total processing time). This is
+Reported result: **~65× faster** inference on an A100 (EAF) vs CPU, giving a 2-3×
+overall workflow speedup (because DNN ROI was ~⅔ of total processing time). This is
 the same pattern you're applying to NuGraph and CVN, just a different model and
 client integration.
