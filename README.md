@@ -45,7 +45,7 @@ The broader aim is not to build a NuGraph-only handoff. The aim is to separate t
 
 The core pattern is simple: keep the reconstruction job as the client, move the expensive model execution to a Triton server, and use EAF GPU resources when local CPU inference becomes the bottleneck.
 
-![IaaS Client Server Pattern](assets/iaas_client_server.png)
+![NuGraph2 IaaS Transition Strip](assets/iaas_nugraph_slide_strip.png)
 
 ---
 
@@ -167,14 +167,15 @@ CVN is included as a concrete adaptation example, not as the only intended endpo
 
 ## Figures and Reference Slides
 
-The `assets/` folder contains small documentation figures extracted from the reference slide decks:
+The `assets/` folder contains small documentation figures extracted from Sparshita's ICARUS NuGraph2/IaaS slides:
 
 - `assets/nugraph_reconstruction_chain.png` -- where NuGraph2 sits in the reconstruction chain.
-- `assets/iaas_client_server.png` -- the IaaS client/server pattern.
+- `assets/iaas_nugraph_slide_strip.png` -- the transition from local inference to Triton/EAF IaaS, shown as a two-slide strip.
 - `assets/stress_test_summary.png` -- stable ICARUS NuGraph2 stress-test behaviour.
 - `assets/queueing_regime.png` -- onset of queueing at higher load.
+- `assets/edge_effect_timing_memory.png` -- timing and memory edge-effect diagnostic plot.
 
-> 📝 Replace these with final collaboration-approved figures if this repository becomes a public-facing or archived deliverable.
+> 📝 External/reference slide decks are linked or cited in the notes where useful, but are not embedded as image assets unless they are part of this ICARUS NuGraph2 workflow material.
 
 ---
 

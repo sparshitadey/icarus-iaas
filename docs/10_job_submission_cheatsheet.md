@@ -6,6 +6,18 @@
 
 This is the short copy-paste version of `docs/05_grid_submission.md`. Use the longer guide when something fails.
 
+> ⚠️ **Before Scaling Up:** start with one small validation job, inspect the logs, and only then increase the job count. Grid submission is easy to scale up, but failed paths, wrong FHiCL includes, or oversized resource requests also scale up very quickly.
+
+## Command Map
+
+| Task | Command Family | Where To Look |
+|---|---|---|
+| Submit a stage | `project.py --submit` | XML in `grid/` |
+| Check outputs | `project.py --check` | Stage output directory |
+| Recover failures | `project.py --makeup` | After fixing XML/resources |
+| Inspect queue | `jobsub_q` | FIFE dashboard |
+| Diagnose logs | `tar -xf log.tar` + `grep` | `larStage0.out`, `larStage0.err`, `Stage0.fcl` |
+
 ## Start an SL7 Session and Set Up ICARUS
 
 ```bash
@@ -84,8 +96,12 @@ grep -Rni "error\|exception\|failed\|triton\|cannot\|file\|art::Exception" .
 
 ## Dashboard Links
 
-- User batch dashboard: <https://fifemon.fnal.gov/monitor/d/000000116/user-batch-details?orgId=1&var-cluster=fifebatch&var-user=<USER>&from=now-15m&to=now>
-- Held jobs: <https://fifemon.fnal.gov/monitor/d/000000146/why-are-my-jobs-held?orgId=1&var-user=<USER>>
+Replace `<USER>` with your FNAL username. Keeping the links in code form avoids accidentally hard-coding one person's dashboard into a reusable handoff.
+
+| Dashboard | URL Template |
+|---|---|
+| User batch dashboard | `https://fifemon.fnal.gov/monitor/d/000000116/user-batch-details?orgId=1&var-cluster=fifebatch&var-user=<USER>&from=now-15m&to=now` |
+| Held jobs | `https://fifemon.fnal.gov/monitor/d/000000146/why-are-my-jobs-held?orgId=1&var-user=<USER>` |
 
 ## Scaling Notes
 

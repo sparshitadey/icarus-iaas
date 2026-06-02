@@ -1,6 +1,6 @@
 # config.pbtxt — annotated template for a Triton model
 #
-# This skeleton is based on the WCT DNN ROI reference config (Meghna/Mike's slides).
+# This skeleton follows the WCT DNN ROI reference config pattern.
 # Every field marked TODO[MODEL] is model-specific and must be set from the target model.
 # The input/output names + dtypes + dims here MUST match what the client fcl sends.
 

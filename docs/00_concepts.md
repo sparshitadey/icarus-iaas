@@ -4,7 +4,7 @@
 
 ---
 
-![IaaS Client Server Pattern](../assets/iaas_client_server.png)
+![NuGraph2 IaaS Transition Strip](../assets/iaas_nugraph_slide_strip.png)
 
 ## Why IaaS at All
 
@@ -62,9 +62,9 @@ reconstruction job (client)
 
 ## A Useful Comparator: DNN ROI for WCT (Wire-Cell Toolkit)
 
-The same idea was applied to **DNN ROI finding** in the signal-processing chain
-(U-ResNet architecture). There, the Triton client (`ITensorForward`) swaps in for
-the local Torch service and:
+The WCT DNN ROI IaaS work is an important conceptual comparator, but the slides are not embedded here so that this repository keeps the visual identity of the ICARUS NuGraph2 benchmark. The useful lesson is the pattern: a Triton client swaps in for local Torch execution, sends tensors to a remote server, and returns inference products to the reconstruction chain.
+
+In that implementation, the Triton client (`ITensorForward`):
 1. configures the gRPC connection + model name and input/output names,
 2. validates and flattens the incoming tensor,
 3. calls `client->Infer(...)`,

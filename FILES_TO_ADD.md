@@ -61,7 +61,7 @@ finalised versions / any new fcls here when tested.
 
 ## 8. Context -> `docs/reference/`   [OPTIONAL]
 
-- the two IaaS slide decks (Meghna's intro; your ICARUS scaling talk) as PDFs
+- reference slide links/PDFs where appropriate (keep external WCT/DNN ROI IaaS material linked rather than embedded; ICARUS NuGraph2 figures can live in `assets/`)
 - one example server log + one client log, trimmed
 
 ## 9. Cheat Sheets -> `docs/`   ✅ [DONE]

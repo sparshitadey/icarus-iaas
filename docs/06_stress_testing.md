@@ -43,12 +43,14 @@ For an event-count scan (NuGraph used up to ~140 events, then grid jobs to 200k)
 Notebooks to parse logs and produce these live in `analysis/notebooks/` (the
 NuGraph plotting notebook is the template).
 
-> **Watch for edge effects, not bugs.** A memory/latency "bump" at certain event
+> ⚠️ **Watch For Edge Effects, Not Bugs:** A memory/latency "bump" at certain event
 > counts turned out to be a real edge effect, **not a bug**: when the number of
-> events isn't a full multiple of the file size (20 events/file), a temporary ACLiC
+> events is not a full multiple of the file size (20 events/file), a temporary ACLiC
 > ROOT file is produced for the partial file, using more memory and adding latency.
 > Processing **complete** files makes it go away. Concatenate/merge inputs or stick to
 > full-file multiples to avoid it.
+
+![Timing and Memory Edge Effect](../assets/edge_effect_timing_memory.png)
 
 ## Reference Results -- the Two Regimes
 
