@@ -88,11 +88,14 @@ setup icaruscode v10_06_00_01p01 -q e26:prof                    # version used f
 ## Tokens (Needed to Run Examples / CAFAna / Grid)
 
 ```bash
-# get a token for the session (valid a few hours):
+# get a token for the session (valid typically 3 hours at a time): 
 htgettoken -a htvaultprod.fnal.gov -i icarus
 # check validity:
 httokendecode -v -H
 ```
+Note: sometimes during running larger jobs, the token can expire and the job will fail. 
+To combat this issue, either regularly update the token during the time of a on ongoing local run
+or set up a grid job. 
 
 > **Tip learned the hard way:** if you make a token mid-session and then hit errors
 > sourcing setup scripts, just start a **fresh terminal** -- the token stays valid for
