@@ -131,14 +131,13 @@ mrbslp
 
 ```bash
 sh /exp/$(id -ng)/data/users/vito/podman/start_SL7dev_jsl.sh
-cd /exp/icarus/app/users/<you>/<your-dev-area>
 source /cvmfs/icarus.opensciencegrid.org/products/icarus/setup_icarus.sh
 setup icaruscode v10_06_00_01p01 -q e26:prof
-source localProducts*/setup
-mrbsetenv
-mrb i -j4
+cd /exp/icarus/app/users/<you>/<your-dev-area>
+source localProducts_larsoft_v10_06_00_e26_prof/setup
 mrbslp
 ```
+You only need to rebuild when you change compiled (C++) code. In that case run mrbsetenv, then `mrb i -jN`, then `mrbslp`. Editing fcl files does not need a rebuild. Do builds on `icarusbuild02` (more cores, e.g. `mrb i -j20`) rather than a `gpvm`, where you are effectively limited to `-j4`.
 
 Verify you're really in your local environment (not global `lar`):
 ```bash
