@@ -161,4 +161,4 @@ pnfsToXRootD /pnfs/.../file.root         # prints a root://fndcadoor.fnal.gov:10
 ```
 
 > XRootD paths occasionally fail (error 20 / no file found). If so, fall back to the
-> explicit `/pnfs/...` path -- it'll work, just less optimally.
+> explicit `/pnfs/...` path (preferred if running locally on gpvm anyway). 
