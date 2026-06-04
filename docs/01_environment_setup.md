@@ -89,11 +89,9 @@ setup icaruscode v10_06_00_01p01 -q e26:prof                    # version used f
 
 ```bash
 # get a token for the session (valid a few hours):
-httokensh -a htvaultprod.fnal.gov -i icarus -- /bin/bash
+htgettoken -a htvaultprod.fnal.gov -i icarus
 # check validity:
 httokendecode -v -H
-# alternative used elsewhere:
-htgettoken -a htvaultprod.fnal.gov -i icarus
 ```
 
 > **Tip learned the hard way:** if you make a token mid-session and then hit errors
