@@ -126,6 +126,12 @@ mrb i -j4          # build; takes a few minutes with no progress output -- be pa
 mrbslp
 ```
 
+> Note: on this branch the lardataobj dependencies differ, so the first build will not
+> give a runnable chain until you register the missing ROOT dictionaries. You need to
+> edit classes_def.xml (and classes.h) in IcarusObj. See
+> [ROOT Dictionary Fixes](../dictionaries/README.md) for the exact additions and the
+> upstream lardataobj reference. Do this before the `lar -c ...` test runs in docs/02.
+
 > **For another ML stage:** the only thing that changes here is *which branch* you check out -- find
 > the branch that has the target model integrated in the ICARUS chain (ask the ML reco group), and
 > use a matching tag/qualifier. CVN is one example; the MRB mechanics are identical.
