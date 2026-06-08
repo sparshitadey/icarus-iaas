@@ -54,13 +54,27 @@ lar -c cafmakerjob_icarus_data.fcl -n -5 -s stage1-test.root
 > Use a small `-n` (e.g. 5) while wiring things up -- you're testing that the pipeline
 > works, not collecting statistics. Larger jobs can get killed on a busy GPVM.
 
+## Current Test Input (as of June 2026)
+
+The current file list to run the chain over lives at:
+
+    /exp/icarus/app/users/sdey2/icaruscode-v10_06_00_01p01_rtriozzi/GridWork/fileLists/backup062026
+
+This is the canonical location used throughout the docs. Set it once per session and
+the run commands here (and in docs/03, docs/04) can use $TEST_LIST:
+
+    export TEST_LIST=/exp/icarus/app/users/sdey2/icaruscode-v10_06_00_01p01_rtriozzi/GridWork/fileLists/backup062026
+
+Scratch areas are cleared on a weeks-to-month timescale, so if a path elsewhere in the
+docs has gone stale, this is the one to update.
+
 ## Reference Run: NuGraph in the Chain (Libtorch, Local)
 
 Once the dictionary work is done (see `dictionaries/`), the local NuGraph inference
 runs with something like:
 ```bash
 lar -c testinference_slice_icarus.fcl -n 5 \
-    -S /pnfs/icarus/scratch/users/rtriozzi/.../stage1/files.list \
+    -S "$TEST_LIST" \
     --process-name redo -o stage1-nugraph.root
 ```
 Exit code 0 = the model->Stage1 path works locally. From here you swap the local

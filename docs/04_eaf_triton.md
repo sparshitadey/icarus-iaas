@@ -48,7 +48,7 @@ export FHICL_FILE_PATH=/exp/icarus/app/users/<you>/<dev>/srcs/icaruscode/icarusc
 echo $FHICL_FILE_PATH | tr ':' '\n' | grep icaruscode | head     # sanity check
 
 lar -c testinference_slice_icarus_triton_eaf.fcl -n 5 \
-    -S /pnfs/icarus/scratch/users/rtriozzi/.../stage1/files.list \
+    -S "$TEST_LIST" \      # current test list, set per docs/02
     --process-name redo -o stage1-nugraph_triton_eaf.root > triton_debug.log 2>&1
 ```
 The `> triton_debug.log 2>&1` is optional but gives you a clean **client-side** log.

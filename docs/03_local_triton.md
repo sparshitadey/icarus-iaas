@@ -56,7 +56,7 @@ fcl. Make sure your fcl dir is on the path (Error 90 in `docs/07` if not):
 export FHICL_FILE_PATH=/exp/icarus/app/users/<you>/<dev>/srcs/icaruscode/icaruscode/TPC/NuGraph:${FHICL_FILE_PATH}
 
 lar -c testinference_slice_icarus_triton.fcl -n 5 \
-    -S /pnfs/icarus/scratch/users/rtriozzi/.../stage1/files.list \
+    -S "$TEST_LIST" \      # current test list, set per docs/02
     --process-name redo -o stage1-nugraph_triton.root
 ```
 
